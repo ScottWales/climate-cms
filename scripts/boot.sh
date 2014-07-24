@@ -25,12 +25,12 @@ nova boot "svn.accessdev.nci.org.au" \
     --flavor="$flavor" \
     --poll \
     --user-data <( cat <<EOF
-#user-data
+#cloud-config
 disable_root:     true
 manage_etc_hosts: localhost
 
-hostname: svn
-fqdn:     svn.accessdev.nci.org.au
+hostname:         svn
+fqdn:             svn.accessdev.nci.org.au
 
 runcmd:
     - rpm -i http://yum.puppetlabs.com/puppetlabs-release-el-6.noarch.rpm
