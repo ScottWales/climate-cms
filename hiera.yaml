@@ -2,7 +2,7 @@
 :backends:
     - yaml
 :yaml:
-    :datadir: "/etc/puppet/%{environment}/hieradata"
+    :datadir: "/etc/puppet/environments/%{::environment}/hieradata"
 :hierarchy:
     - "%{::hostname}.private"
     - "private"
