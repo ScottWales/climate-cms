@@ -18,4 +18,4 @@
 
 cd /etc/puppet/environments/production
 git pull
-puppet apply manifests/site.pp
+puppet apply --environmentpath='/etc/puppet/environments' manifests/site.pp
