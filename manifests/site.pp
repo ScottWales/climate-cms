@@ -16,5 +16,6 @@
 #  limitations under the License.
 
 node default {
-
+  include ::site
+  hiera_include('classes')  
 }
