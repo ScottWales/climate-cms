@@ -44,7 +44,7 @@ runcmd:
     - yum -y install git puppet
     - git clone -b ${branch} https://github.com/ScottWales/svnmirror $envpath/production
     - ln -s /etc/puppet/{environments/production/,}hiera.yaml
-    - puppet apply --environmentpath '$envpath' $envpath/production/manifests/site.pp
+    - bash $envpath/production/modules/site/files/provison.sh
 
 EOF
 )

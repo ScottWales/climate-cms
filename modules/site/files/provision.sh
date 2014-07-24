@@ -1,4 +1,5 @@
-## \file    modules/site/manifests/init.pp
+#!/bin/bash
+## \file    modules/site/files/provision.sh
 #  \author  Scott Wales <scott.wales@unimelb.edu.au>
 #
 #  Copyright 2014 ARC Centre of Excellence for Climate Systems Science
@@ -15,15 +16,6 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-class site (
-  $secure = false,
-) {
-  if ! $secure {
-    warning('Not using secure passwords or certificates')
-  }
-
-  file {'/usr/sbin/provision':
-    source => 'puppet:///modules/site/provision.sh',
-    mode   => '0500',
-  }
-}
+cd /etc/puppet/environments/production
+git pull
+puppet apply manifests/site.pp
