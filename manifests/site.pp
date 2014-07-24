@@ -1,5 +1,4 @@
-#!/bin/bash
-## \file    scripts/boot.sh
+## \file    manifests/site.pp
 #  \author  Scott Wales <scott.wales@unimelb.edu.au>
 #
 #  Copyright 2014 ARC Centre of Excellence for Climate Systems Science
@@ -16,24 +15,6 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-image='centos-6.5-20140715'
-flavor='m1.small'
-branch='master'
+node default {
 
-nova boot "svn.accessdev.nci.org.au" \
-    --image="$image" \
-    --flavor="$flavor" \
-    --poll \
-    --user-data <( cat <<EOF
-#user-data
-disable_root: true
-
-runcmd:
-    - rpm -i http://yum.puppetlabs.com/puppetlabs-release-el-6.noarch.rpm
-    - yum -y install git puppet
-    - git clone -b ${branch} https://github.com/ScottWales/svnmirror /etc/puppet/environments/production
-    - puppet apply /etc/puppet/environments/production/manifests/site.pp
-
-EOF
-)
-
+}
