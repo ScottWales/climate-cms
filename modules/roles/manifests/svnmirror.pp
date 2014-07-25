@@ -65,9 +65,10 @@ class roles::svnmirror (
       }]
   }
   apacheplus::vhost {$vhost:
-    ssl     => true,
-    port    => 443,
-    docroot => '/var/www/null',
+    ssl                    => true,
+    port                   => 443,
+    docroot                => '/var/www/null',
+    max_keepalive_requests => '1000',
   }
 
   # Index of repositories

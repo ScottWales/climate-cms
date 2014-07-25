@@ -47,6 +47,14 @@ define roles::svnmirror::mirror (
     require => File[$path],
   }
 
+  # Create a hook
+  file {"${path}/hooks/pre-revprop-change":
+    ensure   => present,
+    contents => "#!/bin/sh\nexit 0",
+    mode     => '0555',
+    require  => Exec["svnadmin create ${path}"],
+  }
+
   # Initialise sync
   exec {"svnsync init ${path}":
     command   => "svnsync init file://${path} ${origin}",
@@ -55,7 +63,10 @@ define roles::svnmirror::mirror (
     group     => $group,
     onlyif    => "svn info file://${path} | grep '^Revision: 0$'",
     logoutput => true,
-    require   => Exec["svnadmin create ${path}"],
+    require   => [
+      Exec["svnadmin create ${path}"],
+      File["${path}/hooks/pre-revprop-change"],
+    ],
   }
 
   # Do regular pulls
@@ -73,9 +84,9 @@ define roles::svnmirror::mirror (
     allow           => "from ${access_ip}",
     deny            => 'from all',
     custom_fragment => "
-      DAV          svn
-      SVNPath      ${path}
-      SVNMasterURI ${origin}
+      DAV                  svn
+      SVNPath              ${path}
+      SVNMasterURI         ${origin}
     "
   }
 
