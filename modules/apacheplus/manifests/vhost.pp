@@ -123,6 +123,7 @@ define apacheplus::vhost (
 
   concat {$config:
     ensure => present,
+    notify => Class['apache::service'],
   }
   concat::fragment {"${name}-header":
     target  => $config,
