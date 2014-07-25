@@ -44,9 +44,10 @@ class roles::svnmirror (
   $origin_ip      = '127.0.0.1',
   $access_ip      = '127.0.0.1',
   $update_minutes = 5,
-  $mirrors        = {},
   $vhost          = $::fqdn,
 ) {
+  $mirrors        = hiera_hash('roles::svnmirror::mirrors',{})
+
   include ::apache
   include ::apache::mod::dav_svn
 

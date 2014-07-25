@@ -80,7 +80,7 @@ define roles::svnmirror::mirror (
 
   # Do regular pulls
   cron {"svnsync sync ${path}":
-    command   => "/usr/bin/svnsync ${sync_user} ${sync_secret} ${path}",
+    command   => "/usr/bin/svnsync sync ${sync_user} ${sync_secret} file://${path}",
     user      => $user,
     minute    => "*/${update_minutes}",
     require   => Exec["svnsync init ${path}"],
