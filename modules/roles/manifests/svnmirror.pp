@@ -84,8 +84,5 @@ class roles::svnmirror (
     ensure => directory,
   }
 
-  Roles::Svnmirror::Mirror {
-    vhost => $vhost,
-  }
   create_resources('::roles::svnmirror::mirror', $mirrors)
 }
