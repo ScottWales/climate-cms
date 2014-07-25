@@ -124,7 +124,7 @@ define apacheplus::vhost (
   concat {$config:
     ensure => present,
   }
-  concat {"${name}-header":
+  concat::fragment {"${name}-header":
     target  => $config,
     content => '# Managed by puppet',
     order   => '01',
