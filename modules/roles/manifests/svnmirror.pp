@@ -60,8 +60,8 @@ class roles::svnmirror (
     rewrites =>
     {
       comment      => 'SSL',
-      rewrite_cond => '%{HTTPS} != on',
-      rewrite_rule => '^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]'
+      rewrite_cond => ['%{HTTPS} != on'],
+      rewrite_rule => ['^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]'],
     }
   }
   apacheplus::vhost {$vhost:
