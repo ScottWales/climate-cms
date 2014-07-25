@@ -10,14 +10,19 @@ describe "Apache server" do
         it { should be_listening }
     end
 
-    describe port("443") do
-        it { should be_listening }
-    end
+    describe "SSL redirect" do
+        describe port("443") do
+            it { should be_listening }
+        end
 
-    describe command("curl --write-out %{http_code} --silent --output /dev/null http://localhost") do
-        it { should return_stderr '301' }
-    end
-    describe command("curl --write-out %{http_code} --insecure --silent --output /dev/null https://localhost") do
-        it { should return_stderr '200' }
+        describe command("curl -s   --write-out %{http_code}     --output /dev/null http://localhost") do
+            it { should return_stdout '301' }
+        end
+        describe command("curl -skL --write-out %{url_effective} --output /dev/null http://localhost") do
+            it { should return_stdout 'https://localhost/' }
+        end
+        describe command("curl -sk  --write-out %{http_code}     --output /dev/null https://localhost") do
+            it { should return_stdout '200' }
+        end
     end
 end
