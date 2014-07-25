@@ -35,6 +35,6 @@ class wandisco {
       before   => Package['subversion'],
     }
   } else {
-    err("${::osfamily} is unsupported")
+    fail("${::osfamily} is unsupported")
   }
 }
