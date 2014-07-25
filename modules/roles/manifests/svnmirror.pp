@@ -70,10 +70,7 @@ class roles::svnmirror (
     docroot => '/var/www/null',
   }
 
-  Roles::Svnmirror::Mirror {
-    vhost => $vhost,
-  }
-
+  # Index of repositories
   apacheplus::location {'/':
     vhost           => $vhost,
     custom_fragment => "
@@ -83,5 +80,12 @@ class roles::svnmirror (
       ",
   }
 
+  file {$home:
+    ensure => directory,
+  }
+
+  Roles::Svnmirror::Mirror {
+    vhost => $vhost,
+  }
   create_resources('::roles::svnmirror::mirror', $mirrors)
 }
