@@ -24,7 +24,7 @@ define apacheplus::location (
   if ! defined(Class['apache']) {
     fail('You must include the apache class first')
   }
-  $filename = regsubst($name, ' ', '_', 'G')
+  $filename = regsubst($vhost, ' ', '_', 'G')
   $config = "${::apache::vhost_dir}/${filename}.locations"
 
 
