@@ -25,6 +25,7 @@ RSpec.configure do |c|
         options = Net::SSH::Config.for(c.host)
         user    = options[:user] || Etc.getlogin
         c.ssh   = Net::SSH.start(c.host, user, options)
+        c.request_pty = true
 
         @repo = properties[c.host][:repo]
     end
