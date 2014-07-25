@@ -19,6 +19,9 @@ define apacheplus::location (
   $vhost,
   $path            = $name,
   $provider        = 'location',
+  $order           = 'Allow,Deny',
+  $allow           = 'from all',
+  $deny            = 'from none',
   $custom_fragment = undef,
 ) {
   if ! defined(Class['apache']) {
@@ -31,6 +34,9 @@ define apacheplus::location (
   $_directories = {
     path            => $path,
     provider        => $provider,
+    order           => $order,
+    allow           => $allow,
+    deny            => $deny,
     custom_fragment => $custom_fragment,
   }
 

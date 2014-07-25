@@ -15,18 +15,21 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-class roles::svnmirror::mirror (
+define roles::svnmirror::mirror (
   $origin,
+  $repo           = $name,
   $url            = "/${name}",
-  $vhost          = $::roles::svnmirror::vhost,
   $origin_ip      = $::roles::svnmirror::origin_ip,
   $access_ip      = $::roles::svnmirror::access_ip,
-  $home           = $::roles::svnmirror::home,
-  $user           = $::roles::svnmirror::user,
-  $group          = $::roles::svnmirror::group,
   $update_minutes = $::roles::svnmirror::update_minutes,
 ) {
-  $repo = $name  
+
+  # Things we need from the server class
+  $vhost          = $::roles::svnmirror::vhost
+  $home           = $::roles::svnmirror::home
+  $user           = $::roles::svnmirror::user
+  $group          = $::roles::svnmirror::group
+
   $path = "${home}/${repo}"
 
   file {$path:
@@ -56,18 +59,19 @@ class roles::svnmirror::mirror (
 
   # Do regular pulls
   cron {"svnsync sync ${path}":
-    command => "/usr/bin/svnsync ${path} ${origin}",
-    user    => $user,
-    minute  => "*/${update_minutes}",
-    require => Exec["svnsync init ${path}"],
+    command   => "/usr/bin/svnsync ${path} ${origin}",
+    user      => $user,
+    minute    => "*/${update_minutes}",
+    logoutput => true,
+    require   => Exec["svnsync init ${path}"],
   }
 
   # The mirror is accessed from here
   apachesite::location {$url:
     vhost           => $vhost,
-    order           => "Deny,Allow",
+    order           => 'Deny,Allow',
     allow           => "from ${access_ip}",
-    deny            => "from all",
+    deny            => 'from all',
     custom_fragment => "
       DAV          svn
       SVNPath      ${path}
@@ -78,9 +82,9 @@ class roles::svnmirror::mirror (
   # The origin site can push updates to here
   apachesite::location {"${url}-sync":
     vhost           => $vhost,
-    order           => "Deny,Allow",
+    order           => 'Deny,Allow',
     allow           => "from ${origin_ip}",
-    deny            => "from all",
+    deny            => 'from all',
     custom_fragment => "
       DAV          svn
       SVNPath      ${path}

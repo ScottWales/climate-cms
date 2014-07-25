@@ -1,3 +1,7 @@
 ---
 classes:
     - roles::svnmirror
+
+roles::svnmirror::mirrors:
+    um_ext:
+        origin: https://code-test.metoffice.gov.uk/svn/um_ext
