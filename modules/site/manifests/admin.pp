@@ -17,7 +17,7 @@
 
 # Create an admin user
 
-class site::admin (
+define site::admin (
   $mail    = undef,
   $pubkeys = [],
 ) {
