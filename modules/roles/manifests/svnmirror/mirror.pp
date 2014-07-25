@@ -49,10 +49,10 @@ define roles::svnmirror::mirror (
 
   # Create a hook
   file {"${path}/hooks/pre-revprop-change":
-    ensure   => present,
-    contents => "#!/bin/sh\nexit 0",
-    mode     => '0555',
-    require  => Exec["svnadmin create ${path}"],
+    ensure  => present,
+    content => "#!/bin/sh\nexit 0",
+    mode    => '0555',
+    require => Exec["svnadmin create ${path}"],
   }
 
   # Initialise sync
