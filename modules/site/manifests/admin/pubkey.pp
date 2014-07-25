@@ -1,4 +1,4 @@
-## \file    modules/site/manifests/init.pp
+## \file    modules/site/manifests/admin/pubkey.pp
 #  \author  Scott Wales <scott.wales@unimelb.edu.au>
 #
 #  Copyright 2014 ARC Centre of Excellence for Climate Systems Science
@@ -15,18 +15,21 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-class site (
-  $secure = false,
-  $admins = {},
+define site::admin::pubkey (
+  $user
 ) {
-  if ! $secure {
-    warning('Not using secure passwords or certificates')
-  }
+  $keystring = $name
 
-  file {'/usr/sbin/provision':
-    source => 'puppet:///modules/site/provision.sh',
-    mode   => '0500',
-  }
+  $elements = split($keystring,' ')
 
-  create_resources('site::admin',$admins)
+  $type    = $elements[0]
+  $key     = $elements[1]
+  $comment = regsubst($keystring,'^\S\+\s\+\S\+\s\+\(.*\)$','\1')
+
+  ssh_authorized_key{"${user} ${comment}":
+    ensure => present,
+    key    => $key,
+    type   => $type,
+    user   => $user,
+  }
 }

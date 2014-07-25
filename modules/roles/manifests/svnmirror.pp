@@ -16,7 +16,7 @@
 #  limitations under the License.
 
 # Set up a write-through subversion mirror
-# 
+#
 # Users at ${access_ip} are able to use this machine as their svn server instead
 # of ${origin_ip}. Repository writes are passed-through to the master server,
 # while reads come from this one for increased speed.
@@ -34,7 +34,8 @@
 #    Admin:
 #       origin: https://code.metoffice.gov.uk/svn/um_ext/Admin
 #       url:    /admin
-# Only the 'origin' parameter is mandatory, the rest will default to the values in roles::svnmirror 
+# Only the 'origin' parameter is mandatory, the rest will default to the values
+# in roles::svnmirror
 #
 class roles::svnmirror (
   $home           = '/var/svn',
@@ -48,4 +49,5 @@ class roles::svnmirror (
   include ::apache
   include ::apache::mod::dav_svn
 
+  create_resources('::roles::svnmirror::mirror', $mirrors)
 }

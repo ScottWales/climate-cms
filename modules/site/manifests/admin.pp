@@ -1,4 +1,4 @@
-## \file    modules/site/manifests/init.pp
+## \file    modules/site/manifests/admin.pp
 #  \author  Scott Wales <scott.wales@unimelb.edu.au>
 #
 #  Copyright 2014 ARC Centre of Excellence for Climate Systems Science
@@ -15,18 +15,21 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-class site (
-  $secure = false,
-  $admins = {},
+# Create an admin user
+
+class site::admin (
+  $mail    = undef,
+  $pubkeys = [],
 ) {
-  if ! $secure {
-    warning('Not using secure passwords or certificates')
+
+  user {$name:
+    ensure         => present,
+    managehome     => true,
+    purge_ssh_keys => true,
   }
 
-  file {'/usr/sbin/provision':
-    source => 'puppet:///modules/site/provision.sh',
-    mode   => '0500',
+  site::admin::pubkey {$pubkeys:
+    user => $name,
   }
 
-  create_resources('site::admin',$admins)
 }
