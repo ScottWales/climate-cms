@@ -45,6 +45,7 @@ class roles::svnmirror (
   $access_ip      = '127.0.0.1',
   $update_minutes = 5,
   $mirrors        = {},
+  $vhost          = $::fqdn,
 ) {
   include ::apache
   include ::apache::mod::dav_svn
@@ -52,6 +53,13 @@ class roles::svnmirror (
   include ::wandisco
 
   ensure_packages('subversion')
+
+  apacheplus::vhost {$vhost:
+  }
+
+  Roles::Svnmirror::Mirror {
+    vhost => $vhost,
+  }
 
   create_resources('::roles::svnmirror::mirror', $mirrors)
 }
