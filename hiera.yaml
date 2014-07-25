@@ -10,3 +10,4 @@
     - "insecure"
     - "admins"
     - "common"
+:merge_behaviour: deeper

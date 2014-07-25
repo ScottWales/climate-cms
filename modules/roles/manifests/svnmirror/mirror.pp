@@ -17,6 +17,8 @@
 
 define roles::svnmirror::mirror (
   $origin,
+  $origin_user    = undef,
+  $origin_secret  = undef,
   $repo           = $name,
   $url            = "/${name}",
   $origin_ip      = $::roles::svnmirror::origin_ip,
@@ -31,6 +33,13 @@ define roles::svnmirror::mirror (
   $group          = $::roles::svnmirror::group
 
   $path = "${home}/${repo}"
+
+  if $origin_user {
+    $sync_user = "--source-username '${origin_user}'"
+  }
+  if $origin_secret {
+    $sync_secret = "--source-password '${origin_secret}'"
+  }
 
   file {$path:
     ensure => directory,
@@ -57,11 +66,11 @@ define roles::svnmirror::mirror (
 
   # Initialise sync
   exec {"svnsync init ${path}":
-    command   => "svnsync init file://${path} ${origin}",
+    command   => "svnsync init ${sync_user} ${sync_secret}  file://${path} ${origin}",
     path      => ['/bin','/usr/bin'],
     user      => $user,
     group     => $group,
-    onlyif    => "svn info file://${path} | grep '^Revision: 0$'",
+    unless    => "grep '^${origin}$' ${path}/db/revprops/0/0",
     logoutput => true,
     require   => [
       Exec["svnadmin create ${path}"],
@@ -71,7 +80,7 @@ define roles::svnmirror::mirror (
 
   # Do regular pulls
   cron {"svnsync sync ${path}":
-    command   => "/usr/bin/svnsync ${path} ${origin}",
+    command   => "/usr/bin/svnsync ${sync_user} ${sync_secret} ${path}",
     user      => $user,
     minute    => "*/${update_minutes}",
     require   => Exec["svnsync init ${path}"],
