@@ -49,5 +49,9 @@ class roles::svnmirror (
   include ::apache
   include ::apache::mod::dav_svn
 
+  include ::wandisco
+
+  ensure_package('subversion')
+
   create_resources('::roles::svnmirror::mirror', $mirrors)
 }
