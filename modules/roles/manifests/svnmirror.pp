@@ -55,6 +55,7 @@ class roles::svnmirror (
   ensure_packages('subversion')
 
   apacheplus::vhost {$vhost:
+    port    => 80,
     docroot => '/var/www/null',
   }
 
