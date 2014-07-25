@@ -18,4 +18,5 @@
 
 cd /etc/puppet/environments/production
 git pull
+librarian-puppet install --verbose
 puppet apply --environmentpath='/etc/puppet/environments' manifests/site.pp
