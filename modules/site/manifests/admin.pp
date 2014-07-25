@@ -18,12 +18,14 @@
 # Create an admin user
 
 define site::admin (
+  $home    = "/home/${name}",
   $mail    = undef,
   $pubkeys = [],
 ) {
 
   user {$name:
     ensure         => present,
+    home           => $home,
     managehome     => true,
     purge_ssh_keys => true,
   }

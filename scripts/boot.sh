@@ -38,7 +38,7 @@ fqdn:             svn.accessdev.nci.org.au
 runcmd:
     - rpm -i http://yum.puppetlabs.com/puppetlabs-release-el-6.noarch.rpm
     - yum -y install git puppet rubygems
-    - gem install librarian-puppet -v '<1.1.0'
+    - gem install --no-ri --no-rdoc librarian-puppet -v '<1.1.0'
     - git clone -b ${branch} https://github.com/ScottWales/svnmirror $envpath/production
     - ln -s /etc/puppet/{environments/production/,}hiera.yaml
     - bash $envpath/production/modules/site/files/provision.sh
