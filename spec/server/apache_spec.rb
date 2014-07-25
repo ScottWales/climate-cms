@@ -14,12 +14,10 @@ describe "Apache server" do
         it { should be_listening }
     end
 
-    describe "SSL redirection" do
-        describe command("curl --write-out %{http_code} --silent --output/dev/null localhost") {
-            it { should return_stderr '301' }
-        }
-        describe command("curl --write-out %{http_code} --silent --output/dev/null https://localhost") {
-            it { should return_stderr '200' }
-        }
+    describe command("curl --write-out %{http_code} --silent --output /dev/null http://localhost") do
+        it { should return_stderr '301' }
+    end
+    describe command("curl --write-out %{http_code} --insecure --silent --output /dev/null https://localhost") do
+        it { should return_stderr '200' }
     end
 end

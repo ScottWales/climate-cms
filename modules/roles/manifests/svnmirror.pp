@@ -55,8 +55,14 @@ class roles::svnmirror (
   ensure_packages('subversion')
 
   apacheplus::vhost {"${vhost}-redirect":
-    port    => 80,
-    docroot => '/var/www/null',
+    port     => 80,
+    docroot  => '/var/www/null',
+    rewrites =>
+    {
+      comment      => 'SSL',
+      rewrite_cond => '%{HTTPS} != on',
+      rewrite_rule => '^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]'
+    }
   }
   apacheplus::vhost {$vhost:
     ssl     => true,
