@@ -49,12 +49,13 @@ define roles::svnmirror::mirror (
 
   # Initialise sync
   exec {"svnsync init ${path}":
-    command => "svnsync init file://${path} ${origin}",
-    path    => ['/bin','/usr/bin'],
-    user    => $user,
-    group   => $group,
-    onlyif  => "svn info file://${path} | grep '^Revision: 0$'",
-    require => Exec["svnadmin create ${path}"],
+    command   => "svnsync init file://${path} ${origin}",
+    path      => ['/bin','/usr/bin'],
+    user      => $user,
+    group     => $group,
+    onlyif    => "svn info file://${path} | grep '^Revision: 0$'",
+    logoutput => true,
+    require   => Exec["svnadmin create ${path}"],
   }
 
   # Do regular pulls
@@ -62,7 +63,6 @@ define roles::svnmirror::mirror (
     command   => "/usr/bin/svnsync ${path} ${origin}",
     user      => $user,
     minute    => "*/${update_minutes}",
-    logoutput => true,
     require   => Exec["svnsync init ${path}"],
   }
 
