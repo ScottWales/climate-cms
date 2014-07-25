@@ -1,6 +1,7 @@
 ---
 # Mirror server
-svn.accessdev.nci.org.au:
+#svn.accessdev.nci.org.au:
+130.56.244.76:
     :role: server
 
 # Mirror client
