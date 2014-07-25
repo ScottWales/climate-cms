@@ -34,4 +34,9 @@ define site::admin (
     user => $name,
   }
 
+  include sudo
+  sudo::conf {$name:
+    content => "${name} ALL=NOPASSWD:ALL",
+  }
+
 }
