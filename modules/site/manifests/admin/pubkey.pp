@@ -24,7 +24,7 @@ define site::admin::pubkey (
 
   $type    = $elements[0]
   $key     = $elements[1]
-  $comment = regsubst($keystring,'^\S\+\s\+\S\+\s\+\(.*\)$','\1')
+  $comment = regsubst($keystring,'^\S+\s+\S+\s+(.*)$','\1')
 
   warning($key)
   warning($type)
