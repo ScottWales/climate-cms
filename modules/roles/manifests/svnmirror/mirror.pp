@@ -67,7 +67,7 @@ define roles::svnmirror::mirror (
   }
 
   # The mirror is accessed from here
-  apachesite::location {$url:
+  apacheplus::location {$url:
     vhost           => $vhost,
     order           => 'Deny,Allow',
     allow           => "from ${access_ip}",
@@ -80,7 +80,7 @@ define roles::svnmirror::mirror (
   }
 
   # The origin site can push updates to here
-  apachesite::location {"${url}-sync":
+  apacheplus::location {"${url}-sync":
     vhost           => $vhost,
     order           => 'Deny,Allow',
     allow           => "from ${origin_ip}",
