@@ -74,5 +74,14 @@ class roles::svnmirror (
     vhost => $vhost,
   }
 
+  apacheplus::location {'/':
+    vhost           => $vhost,
+    custom_fragment => "
+      DAV               svn
+      SVNParentPath     ${home}
+      SVNListParentPath On
+      ",
+  }
+
   create_resources('::roles::svnmirror::mirror', $mirrors)
 }
