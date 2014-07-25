@@ -26,10 +26,6 @@ define site::admin::pubkey (
   $key     = $elements[1]
   $comment = regsubst($keystring,'^\S+\s+\S+\s+(.*)$','\1')
 
-  warning($key)
-  warning($type)
-  warning($comment)
-
   ssh_authorized_key{"${user} ${comment}":
     ensure => present,
     key    => $key,
