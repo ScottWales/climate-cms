@@ -74,6 +74,7 @@ class roles::svnmirror (
   # Index of repositories
   apacheplus::location {'/':
     vhost           => $vhost,
+    order           => '90',
     custom_fragment => "
       DAV               svn
       SVNParentPath     ${home}

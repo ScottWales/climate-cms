@@ -18,6 +18,7 @@
 define apacheplus::location (
   $vhost,
   $path            = $name,
+  $order           = '20',
   $provider        = 'location',
   $order           = 'Allow,Deny',
   $allow           = 'from all',
@@ -43,7 +44,7 @@ define apacheplus::location (
   concat::fragment {"Location ${name}":
     target  => $config,
     content => template('apache/vhost/_directories.erb'),
-    order   => '20',
+    order   => $order,
   }
 }
 
