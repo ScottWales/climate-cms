@@ -5,6 +5,7 @@ roles::svnmirror::access_ip: 130.56.244.72
 
 # List of servers to mirror
 roles::svnmirror::mirrors:
-    '/svn/um_ext':
+    um_ext:
+        url:       /svn/um_ext
         origin:    https://code-test.metoffice.gov.uk/svn/um_ext
         origin_ip: 185.40.8.19
