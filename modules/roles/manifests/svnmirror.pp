@@ -75,11 +75,6 @@ class roles::svnmirror (
   apacheplus::location {'/':
     vhost           => $vhost,
     priority        => '90',
-    custom_fragment => "
-      DAV               svn
-      SVNParentPath     ${home}
-      SVNListParentPath On
-      ",
   }
 
   file {$home:
