@@ -68,9 +68,18 @@ class roles::svnmirror (
       }]
   }
   apacheplus::vhost {$vhost:
-    ssl                    => true,
-    port                   => 443,
-    docroot                => '/var/www/null',
+    ssl             => true,
+    ssl_proxyengine => true,
+    port            => 443,
+    docroot         => '/var/www/null',
+    custom_fragment => '
+      KeepAlive            On
+      MaxKeepAliveRequests 1000
+      SVNInMemoryCacheSize 1048576
+      SVNCacheTextDeltas   On
+      SVNCacheFullTexts    On
+      SVNCompressionLevel  5
+      '
   }
 
   file {$home:
