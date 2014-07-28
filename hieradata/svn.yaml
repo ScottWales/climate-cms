@@ -1,10 +1,10 @@
 ---
-classes:
-    - roles::svnmirror
-
+# Where will users access this server from? (other IPs will be blocked by
+# Apache)
 roles::svnmirror::access_ip: 130.56.244.72
 
+# List of servers to mirror
 roles::svnmirror::mirrors:
-    um_ext:
+    '/svn/um_ext':
         origin:    https://code-test.metoffice.gov.uk/svn/um_ext
         origin_ip: 185.40.8.19

@@ -1,4 +1,7 @@
 ---
+# Hash of users with admin rights on the system. 
+#  - Only public key authentication is allowed, multiple pubkeys can be listed per user
+#  - These users will have sudo rights by default
 site::admins:
     saw562:
         mail: saw562@anusf.anu.edu.au
