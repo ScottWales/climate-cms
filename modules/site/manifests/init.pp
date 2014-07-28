@@ -28,5 +28,11 @@ class site (
     mode   => '0500',
   }
 
+  # Don't require a tty for sudoers
+  sudo::conf {'requiretty':
+    priority => 10,
+    content  => 'Defaults !requiretty',
+  }
+
   create_resources('site::admin',$admins)
 }
