@@ -44,7 +44,7 @@ define apacheplus::location (
   concat::fragment {"Location ${name}":
     target  => $config,
     content => template('apache/vhost/_directories.erb'),
-    order   => $order,
+    order   => $priority,
   }
 }
 
