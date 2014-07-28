@@ -79,6 +79,7 @@ class roles::svnmirror (
       SVNCacheTextDeltas   On
       SVNCacheFullTexts    On
       SVNCompressionLevel  5
+      CustomLog logs/svn "%t %u %{SVN-ACTION}e" env=SVN-ACTION
       '
   }
 
