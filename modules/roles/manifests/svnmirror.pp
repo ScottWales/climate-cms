@@ -49,6 +49,8 @@ class roles::svnmirror (
 
   include ::apache
   include ::apache::mod::dav_svn
+  include ::apache::mod::proxy
+  include ::apache::mod::proxy_http
 
   include ::wandisco
 
