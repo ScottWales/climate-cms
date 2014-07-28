@@ -23,7 +23,7 @@ define apacheplus::location (
   $order           = 'Allow,Deny',
   $allow           = 'from all',
   $deny            = 'from none',
-  $custom_fragment = undef,
+  $custom_fragment = '',
 ) {
   if ! defined(Class['apache']) {
     fail('You must include the apache class first')
