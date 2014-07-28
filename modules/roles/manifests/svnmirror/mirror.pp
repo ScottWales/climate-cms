@@ -90,7 +90,7 @@ define roles::svnmirror::mirror (
   apacheplus::location {$url:
     vhost           => $vhost,
     order           => 'Deny,Allow',
-    allow           => "from ${access_ip}",
+    allow           => "from ${access_ip},${::ipaddress_eth0}",
     deny            => 'from all',
     custom_fragment => "
       DAV                  svn
@@ -103,7 +103,7 @@ define roles::svnmirror::mirror (
   apacheplus::location {"${url}-sync":
     vhost           => $vhost,
     order           => 'Deny,Allow',
-    allow           => "from ${origin_ip}",
+    allow           => "from ${origin_ip},${::ipaddress_eth0}",
     deny            => 'from all',
     custom_fragment => "
       DAV          svn
