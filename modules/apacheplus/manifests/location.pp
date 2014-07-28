@@ -18,7 +18,7 @@
 define apacheplus::location (
   $vhost,
   $path            = $name,
-  $order           = '20',
+  $priority        = '20',
   $provider        = 'location',
   $order           = 'Allow,Deny',
   $allow           = 'from all',
