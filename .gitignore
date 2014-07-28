@@ -1,4 +1,4 @@
 .*
 *.swp
 /Gemfile.lock
-/hieradata/*secure
+/hieradata/*private
