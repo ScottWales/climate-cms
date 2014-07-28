@@ -1,6 +1,8 @@
 ---
+# If true will print a warning in the Puppet logs
 site::insecure: true
 
+# Secrets for accessing remote mirrors
 roles::svnmirror::mirrors:
     um_ext:
         origin_user:   user

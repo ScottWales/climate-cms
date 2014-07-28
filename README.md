@@ -12,7 +12,7 @@ Configuration
 System configuration uses Hiera. Any private information should be added to
 `hieradata/$HOSTNAME.private.yaml` or `hieradata/private.yaml` on the server
 itself, these files should not be committed to the repository.
-[hieradata/insecure.yaml](heiradata/insecure.yaml) stores insecure secrets for
+[hieradata/insecure.yaml](hieradata/insecure.yaml) stores insecure secrets for
 testing, copy this file & change the secrets to create a secure version.
 
  * System admin accounts are configured in
