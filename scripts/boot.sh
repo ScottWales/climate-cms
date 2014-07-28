@@ -22,6 +22,9 @@ branch='master'
 
 envpath='/etc/puppet/environments'
 
+# Boot a cloud instance then provision with Puppet
+# Here we're just installing basic dependencies & checking out the repository,
+# the provision script will do the rest of the work.
 nova boot "svn.accessdev.nci.org.au" \
     --image="$image" \
     --flavor="$flavor" \
@@ -39,9 +42,9 @@ runcmd:
     - rpm -i http://yum.puppetlabs.com/puppetlabs-release-el-6.noarch.rpm
     - yum -y install git puppet rubygems
     - gem install --no-ri --no-rdoc librarian-puppet -v '<1.1.0'
-    - git clone -b ${branch} https://github.com/ScottWales/svnmirror $envpath/production
+    - git clone -b ${branch} https://github.com/ScottWales/svnmirror ${envpath}/production
     - ln -s /etc/puppet/{environments/production/,}hiera.yaml
-    - bash $envpath/production/modules/site/files/provision.sh
+    - bash ${envpath}/production/modules/site/files/provision.sh
 
 EOF
 )
