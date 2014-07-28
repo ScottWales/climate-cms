@@ -60,6 +60,7 @@ What it Does
 ------------
 
 The Puppet manifest applies two classes - `::site` and `::roles::svnmirror`.
-`::site` sets up site-specific configuration, and should be modified for your
-environment. `::roles::svnmirror` sets up a write-through Subversion mirror
-proxy using Apache and `mod_dav_svn`.
+`[::site](modules/site/manifests/init.pp)` sets up site-specific configuration,
+and should be modified for your environment.
+`[::roles::svnmirror](modules/roles/manifests/svnmirror.pp)` sets up a
+write-through Subversion mirror proxy using Apache and `mod_dav_svn`.
