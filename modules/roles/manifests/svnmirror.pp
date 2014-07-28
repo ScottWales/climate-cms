@@ -1,4 +1,3 @@
-## \file    modules/roles/manifests/svnmirror.pp
 #  \author  Scott Wales <scott.wales@unimelb.edu.au>
 #
 #  Copyright 2014 ARC Centre of Excellence for Climate Systems Science
@@ -73,8 +72,11 @@ class roles::svnmirror (
 
   # Index of repositories
   apacheplus::location {'/':
-    vhost           => $vhost,
-    priority        => '90',
+    vhost    => $vhost,
+    order    => 'Deny,Allow',
+    deny     => 'from all',
+    allow    => 'from none',
+    priority => '90',
   }
 
   file {$home:

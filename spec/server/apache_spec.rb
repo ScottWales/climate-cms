@@ -22,7 +22,7 @@ describe "Apache server" do
             it { should return_stdout 'https://localhost/' }
         end
         describe command("curl -sk  --write-out %{http_code}     --output /dev/null https://localhost") do
-            it { should return_stdout '200' }
+            it { should return_stdout '404' }
         end
     end
 end

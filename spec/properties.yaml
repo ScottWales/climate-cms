@@ -1,4 +1,8 @@
 ---
+# An external unauthorised machine
+localhost:
+    :role: external
+
 # Mirror server
 #svn.accessdev.nci.org.au:
 130.56.244.76:
@@ -10,6 +14,3 @@ accessdev.nci.org.au:
     # Repos to test
     :repo: https://svn.accessdev.nci.org.au/um_ext/UM
 
-# An external unauthorised machine
-localhost:
-    :role: external
