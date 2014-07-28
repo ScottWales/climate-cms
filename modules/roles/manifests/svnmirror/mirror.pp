@@ -95,7 +95,7 @@ define roles::svnmirror::mirror (
     deny            => 'from all',
     custom_fragment => "
       DAV                  svn
-      SVNPath              ${path}
+     #SVNPath              ${path}
       SVNMasterURI         ${origin}
     "
   }
