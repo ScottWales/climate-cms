@@ -18,4 +18,7 @@
 node default {
   include ::site
   hiera_include('classes',[])
+
+  # Silence deprecation warning
+  Package {allow_virtual => false}
 }
