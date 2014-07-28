@@ -32,6 +32,7 @@ define roles::svnmirror::mirror (
   $user           = $::roles::svnmirror::user
   $group          = $::roles::svnmirror::group
 
+  # Filesystem location for the repo
   $path = "${home}/${repo}"
 
   if $origin_user {
@@ -59,7 +60,7 @@ define roles::svnmirror::mirror (
   # Create a hook
   file {"${path}/hooks/pre-revprop-change":
     ensure  => present,
-    content => "#!/bin/sh\nexit 0",
+    content => "#!/bin/sh\nexit 0\n",
     mode    => '0555',
     require => Exec["svnadmin create ${path}"],
   }
@@ -87,7 +88,7 @@ define roles::svnmirror::mirror (
   }
 
   # The mirror is accessed from here
-  # Also allow access from the local machine's IP address
+  # Also allow access from the local machine's IP address for testing
   apacheplus::location {$url:
     vhost           => $vhost,
     order           => 'Deny,Allow',

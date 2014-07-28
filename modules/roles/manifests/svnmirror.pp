@@ -42,21 +42,24 @@ class roles::svnmirror (
   $group          = 'apache',
   $origin_ip      = '127.0.0.1',
   $access_ip      = '127.0.0.1',
-  $update_minutes = 5,
+  $update_minutes = 1,
   $vhost          = $::fqdn,
 ) {
   $mirrors        = hiera_hash('roles::svnmirror::mirrors',{})
 
+  # Load Apache & modules
   include ::apache
   include ::apache::mod::dav_svn
   include ::apache::mod::proxy
   include ::apache::mod::proxy_http
 
+  # Get latest svn from Wandisco
   include ::wandisco
 
   ensure_packages('subversion')
   ensure_packages('mod_dav_svn')
 
+  # Redirect non-SSL connections to https
   apacheplus::vhost {"${vhost}-redirect":
     port     => 80,
     docroot  => '/var/www/null',
@@ -67,6 +70,8 @@ class roles::svnmirror (
         rewrite_rule => ['^(.*)$ https://%{HTTP_HOST}$1 [R=301,L]'],
       }]
   }
+
+  # Main vhost
   apacheplus::vhost {$vhost:
     ssl             => true,
     ssl_proxyengine => true,
@@ -83,9 +88,11 @@ class roles::svnmirror (
       '
   }
 
+  # Directory to store repositories in
   file {$home:
     ensure => directory,
   }
 
+  # Create mirrors listed in hiera
   create_resources('::roles::svnmirror::mirror', $mirrors)
 }

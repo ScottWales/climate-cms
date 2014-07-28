@@ -16,7 +16,11 @@
 #  limitations under the License.
 
 node default {
+
+  # Always include ::site
   include ::site
+
+  # Include classes listed in Hiera
   hiera_include('classes',[])
 
   # Silence deprecation warning
