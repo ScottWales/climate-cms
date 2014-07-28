@@ -38,7 +38,7 @@ class site (
 
   # Allow SSH
   firewall { '022 accept ssh':
-    proto  => 'all',
+    proto  => 'tcp',
     port   => '22',
     action => 'accept',
   }
