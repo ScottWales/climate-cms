@@ -25,4 +25,13 @@ node default {
 
   # Silence deprecation warning
   Package {allow_virtual => false}
+
+  # Firewall defaults
+  Firewall {
+    require => Class['::site::firewall::pre'],
+    before  => Class['::site::firewall::post'],
+  }
+  include ::site::firewall::pre
+  include ::site::firewall::post
+
 }

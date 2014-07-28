@@ -15,7 +15,7 @@ describe "Unauthorised access" do
     end
     
     describe 'Check connection to mirror repo' do
-        repo = "https://#{server}/um_ext"
+        repo = "https://#{server}/svn/um_ext"
         describe command("svn info --non-interactive --trust-server-cert #{repo}") do
             it {should_not return_exit_status 0}
         end
@@ -25,7 +25,7 @@ describe "Unauthorised access" do
     end
 
     describe 'Check connection to sync repo' do
-        repo = "https://#{server}/um_ext-sync"
+        repo = "https://#{server}/svn/um_ext-sync"
         describe command("svn info --non-interactive --trust-server-cert #{repo}") do
             it {should_not return_exit_status 0}
         end

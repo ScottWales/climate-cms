@@ -35,4 +35,12 @@ class site (
   }
 
   create_resources('site::admin',$admins)
+
+  # Allow SSH
+  firewall { '022 accept ssh':
+    proto  => 'all',
+    port   => '22',
+    action => 'accept',
+  }
+
 }
