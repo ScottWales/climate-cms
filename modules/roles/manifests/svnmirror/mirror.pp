@@ -116,7 +116,7 @@ define roles::svnmirror::mirror (
   # Cache credentials
   exec {"cache credentials ${origin}":
     path    => ['/bin','/usr/bin'],
-    command => "svn info --config-option servers:global:store-passwords=yes --config-option servers:global:store-plaintext-passwords=yes --username ${user} --password ${secret} ${origin}",
+    command => "svn info --config-option servers:global:store-passwords=yes --config-option servers:global:store-plaintext-passwords=yes --username ${origin_user} --password ${origin_secret} ${origin}",
     unless  => "svn info ${origin}",
     user    => $user,
   }
