@@ -48,7 +48,7 @@ class roles::svnmirror (
   $mirrors        = hiera_hash('roles::svnmirror::mirrors',{})
 
   # Open firewall
-  include ::roles::firewall::http
+  include ::site::firewall::http
 
   # Load Apache & modules
   include ::apache
