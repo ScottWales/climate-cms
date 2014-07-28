@@ -16,21 +16,21 @@ describe "Unauthorised access" do
     
     describe 'Check connection to mirror repo' do
         repo = "https://#{server}/um_ext"
-        describe command("svn info --non-interactive #{repo}") do
+        describe command("svn info --non-interactive --trust-server-cert #{repo}") do
             it {should_not return_exit_status 0}
         end
         describe command("curl -skL --write-out %{http_code}     --output /dev/null #{repo}") do
-            it { should return_stdout '404' }
+            it { should return_stdout '403' }
         end
     end
 
     describe 'Check connection to sync repo' do
         repo = "https://#{server}/um_ext-sync"
-        describe command("svn info --non-interactive #{repo}") do
+        describe command("svn info --non-interactive --trust-server-cert #{repo}") do
             it {should_not return_exit_status 0}
         end
         describe command("curl -skL --write-out %{http_code}     --output /dev/null #{repo}") do
-            it { should return_stdout '404' }
+            it { should return_stdout '403' }
         end
     end
 end

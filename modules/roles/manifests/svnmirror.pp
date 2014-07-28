@@ -70,15 +70,6 @@ class roles::svnmirror (
     docroot                => '/var/www/null',
   }
 
-  # Index of repositories
-  apacheplus::location {'/':
-    vhost    => $vhost,
-    order    => 'Deny,Allow',
-    deny     => 'from all',
-    allow    => 'from none',
-    priority => '90',
-  }
-
   file {$home:
     ensure => directory,
   }
