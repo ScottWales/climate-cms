@@ -32,7 +32,7 @@ class wandisco {
       gpgcheck => true,
       gpgkey   => "file://${gpgkey}",
       require  => File[$gpgkey],
-      before   => Package['subversion'],
+      before   => Package['subversion','mod_dav_svn'],
     }
   } else {
     fail("${::osfamily} is unsupported")

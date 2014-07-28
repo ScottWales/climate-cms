@@ -53,6 +53,7 @@ class roles::svnmirror (
   include ::wandisco
 
   ensure_packages('subversion')
+  ensure_packages('mod_dav_svn')
 
   apacheplus::vhost {"${vhost}-redirect":
     port     => 80,
