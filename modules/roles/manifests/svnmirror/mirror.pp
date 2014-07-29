@@ -76,8 +76,8 @@ define roles::svnmirror::mirror (
     unless    => "grep '^${origin}$' ${path}/db/revprops/0/0",
     logoutput => true,
     require   => [
-      Exec["svnadmin create ${path}"],
-      File["${path}/hooks/pre-revprop-change", "cache-credentials ${origin}"],
+      Exec["svnadmin create ${path}", "cache-credentials ${origin}"],
+      File["${path}/hooks/pre-revprop-change"],
     ],
   }
 
