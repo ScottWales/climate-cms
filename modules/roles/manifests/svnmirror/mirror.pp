@@ -35,11 +35,13 @@ define roles::svnmirror::mirror (
   # Filesystem location for the repo
   $path = "${home}/${repo}"
 
-  if $origin_user {
-    $sync_user = "--source-username '${origin_user}'"
-  }
-  if $origin_secret {
-    $sync_secret = "--source-password '${origin_secret}'"
+  # Cache credentials
+  exec {"cache-credentials ${origin}":
+    path    => ['/bin','/usr/bin'],
+    command => "svn info --config-option servers:global:store-passwords=yes --config-option servers:global:store-plaintext-passwords=yes --username ${origin_user} --password ${origin_secret} ${origin}",
+    unless  => "svn info ${origin}",
+    user    => $user,
+    require => File["${home}/.subversion"],
   }
 
   file {$path:
@@ -67,7 +69,7 @@ define roles::svnmirror::mirror (
 
   # Initialise sync
   exec {"svnsync init ${path}":
-    command   => "svnsync init ${sync_user} ${sync_secret}  file://${path} ${origin}",
+    command   => "svnsync init file://${path} ${origin}",
     path      => ['/bin','/usr/bin'],
     user      => $user,
     group     => $group,
@@ -75,13 +77,13 @@ define roles::svnmirror::mirror (
     logoutput => true,
     require   => [
       Exec["svnadmin create ${path}"],
-      File["${path}/hooks/pre-revprop-change"],
+      File["${path}/hooks/pre-revprop-change", "cache-credentials ${origin}"],
     ],
   }
 
   # Do regular pulls
   cron {"svnsync sync ${path}":
-    command   => "/usr/bin/svnsync sync --non-interactive ${sync_user} ${sync_secret} file://${path}",
+    command   => "/usr/bin/svnsync sync --non-interactive file://${path}",
     user      => $user,
     minute    => "*/${update_minutes}",
     require   => Exec["svnsync init ${path}"],
@@ -111,14 +113,6 @@ define roles::svnmirror::mirror (
       DAV          svn
       SVNPath      ${path}
     "
-  }
-
-  # Cache credentials
-  exec {"cache credentials ${origin}":
-    path    => ['/bin','/usr/bin'],
-    command => "svn info --config-option servers:global:store-passwords=yes --config-option servers:global:store-plaintext-passwords=yes --username ${origin_user} --password ${origin_secret} ${origin}",
-    unless  => "svn info ${origin}",
-    user    => $user,
   }
 
 }

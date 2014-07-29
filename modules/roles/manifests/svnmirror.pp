@@ -38,7 +38,7 @@
 #
 class roles::svnmirror (
   $home           = '/var/svn',
-  $user           = 'apache',
+  $user           = 'svnsync',
   $group          = 'apache',
   $origin_ip      = '127.0.0.1',
   $access_ip      = '127.0.0.1',
@@ -94,6 +94,22 @@ class roles::svnmirror (
   # Directory to store repositories in
   file {$home:
     ensure => directory,
+  }
+
+  # User owning the repository
+  user {$user:
+    gid            => $group,
+    home           => $home,
+    shell          => '/sbin/nologin',
+    system         => true,
+    purge_ssh_keys => true,
+  }
+
+  # Sync user credential store
+  file {"${home}/.subversion":
+    ensure => directory,
+    owner  => $user,
+    mode   => '0700',
   }
 
   # Create mirrors listed in hiera
