@@ -83,6 +83,10 @@ class roles::svnmirror (
     ssl_proxyengine => true,
     port            => 443,
     docroot         => '/var/www/null',
+    proxy_pass      => [{
+      'path'        => '/sync',
+      'url'         => 'http://localhost:8080/',
+    }],
     custom_fragment => '
       KeepAlive            On
       MaxKeepAliveRequests 1000
@@ -120,6 +124,13 @@ class roles::svnmirror (
   # Run a little webservice to listen for updates
   ensure_packages('python-cherrypy')
 
+  apacheplus::location {'/sync':
+    vhost           => $vhost,
+    order           => 'Deny,Allow',
+    allow           => "from ${origin_ip} ${::ipaddress_eth0} localhost",
+    deny            => 'from all',
+  }
+
   # Sync server
   file {'/usr/local/bin/svnsync-listener.py':
     source => 'puppet:///modules/roles/svnmirror/update-service.py',
@@ -128,8 +139,8 @@ class roles::svnmirror (
   }
 
   supervisord::program {'svnsync-listener':
-    command => '/usr/bin/python /usr/local/bin/svnsync-listener.py',
-    user    => $user,
-    require => File['/usr/local/bin/svnsync-listener.py'],
+    command   => '/usr/bin/python /usr/local/bin/svnsync-listener.py',
+    user      => $user,
+    subscribe => File['/usr/local/bin/svnsync-listener.py'],
   }
 }
