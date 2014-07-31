@@ -8,3 +8,5 @@ classes:
 # Default class arguments
 apache::default_vhost: false
 apache::default_mods: false
+
+supervisord::package_provider: 'yum'
