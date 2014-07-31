@@ -30,8 +30,9 @@ import subprocess
 class SvnsyncWebService(object):
     exposed = True
 
-    def POST(self, **data):
-        cherrypy.log("Running sync")
+    def POST(self):
+        data = cherrypy.request.body
+        cherrypy.log("Running sync with %s"%data)
         subprocess.Popen(["svnsync","--non-interactive","sync","file:///var/svn/um_ext"])
 
 
