@@ -34,4 +34,7 @@ node default {
   include ::site::firewall::pre
   include ::site::firewall::post
 
+  # Ensure Pip is available before we install packages with it
+  ensure_packages('python-pip')
+  Package['python-pip'] -> Package<| provider == pip |>
 }
