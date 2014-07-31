@@ -5,3 +5,5 @@ mod 'puppetlabs/apache'
 mod 'puppetlabs/firewall'
 
 mod 'saz/sudo'
+
+mod 'ajcrowe/supervisord'
