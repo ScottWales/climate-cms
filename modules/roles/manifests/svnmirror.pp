@@ -86,7 +86,6 @@ class roles::svnmirror (
     custom_fragment => '
       KeepAlive            On
       MaxKeepAliveRequests 1000
-      SVNInMemoryCacheSize 1048576
       SVNCacheTextDeltas   On
       SVNCacheFullTexts    On
       SVNCompressionLevel  5
