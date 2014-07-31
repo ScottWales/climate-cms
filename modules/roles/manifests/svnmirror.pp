@@ -128,7 +128,8 @@ class roles::svnmirror (
   }
 
   supervisord::program {'svnsync-listener':
-    command => '/usr/local/bin/python /usr/local/bin/svnsync-listener.py',
+    command => '/usr/bin/python /usr/local/bin/svnsync-listener.py',
     user    => $user,
+    require => File['puppet:///modules/roles/svnmirror/update-service.py'],
   }
 }
