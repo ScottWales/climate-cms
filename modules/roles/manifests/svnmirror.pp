@@ -136,11 +136,11 @@ class roles::svnmirror (
     source => 'puppet:///modules/roles/svnmirror/update-service.py',
     owner  => $user,
     group  => $group,
+    notify => Class['supervisord::reload'],
   }
 
   supervisord::program {'svnsync-listener':
     command   => '/usr/bin/python /usr/local/bin/svnsync-listener.py',
     user      => $user,
-    subscribe => File['/usr/local/bin/svnsync-listener.py'],
   }
 }
