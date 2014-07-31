@@ -9,6 +9,5 @@ classes:
 apache::default_vhost: false
 apache::default_mods:  false
 
-supervisord::package_provider: yum
 supervisord::executable:       /usr/bin/supervisord
 supervisord::executable_ctl:   /usr/bin/supervisorctl
