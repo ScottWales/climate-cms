@@ -122,7 +122,7 @@ class roles::svnmirror (
 
   # Sync server
   file {'/usr/local/bin/svnsync-listener.py':
-    source => 'puppet:///module/roles/svnmirror/update-service.py',
+    source => 'puppet:///modules/roles/svnmirror/update-service.py',
     owner  => $user,
     group  => $group,
   }
