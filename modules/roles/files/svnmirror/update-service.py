@@ -32,7 +32,7 @@ class SvnsyncWebService(object):
 
     def POST(self):
         cherrypy.log("Running sync")
-        subprocess.Popen(["svnsync","--non-interactive","sync","/var/svn/um_ext"])
+        subprocess.Popen(["svnsync","--non-interactive","sync","file:///var/svn/um_ext"])
 
 
 if __name__ == '__main__':
