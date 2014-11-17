@@ -1,4 +1,4 @@
-## \file    manifests/site.pp
+## \file    modules/site/manifests/puppet.pp
 #  \author  Scott Wales <scott.wales@unimelb.edu.au>
 #
 #  Copyright 2014 ARC Centre of Excellence for Climate Systems Science
@@ -15,13 +15,11 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-# Defaults for all nodes
-node default {
+# Start up Puppet
+class site::puppet {
 
-  # Make sure Puppet is running
   service {'puppet':
     ensure => running,
     enable => true,
   }
-
 }
