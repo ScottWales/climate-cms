@@ -25,7 +25,7 @@ envpath='/etc/puppet/environments'
 # Boot a cloud instance then provision with Puppet
 # Here we're just installing basic dependencies & checking out the repository,
 # the provision script will do the rest of the work.
-nova boot "svn.accessdev.nci.org.au" \
+nova boot "subversion-mirror" \
     --image="$image" \
     --flavor="$flavor" \
     --security-groups "ssh,http" \
@@ -34,9 +34,6 @@ nova boot "svn.accessdev.nci.org.au" \
 #cloud-config
 disable_root:     true
 manage_etc_hosts: localhost
-
-hostname:         svn
-fqdn:             svn.accessdev.nci.org.au
 
 runcmd:
     - rpm -i http://yum.puppetlabs.com/puppetlabs-release-el-6.noarch.rpm
