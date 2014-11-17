@@ -1,4 +1,4 @@
-## \file    manifests/site.pp
+## \file    firewall/defaults.pp
 #  \author  Scott Wales <scott.wales@unimelb.edu.au>
 #
 #  Copyright 2014 ARC Centre of Excellence for Climate Systems Science
@@ -15,21 +15,27 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-# Generic server configs
-node default {
+# Default firewall rules
+class site::firewall::defaults {
 
-  include site::puppet
-  include site::updates
-
-  # Setup firewall
-  resources {'firewall':
-    purge => true,
-  }
   Firewall {
-    require => Class[site::firewall::defaults],
-    before  => Class[site::firewall::dropall],
+    require => undef,
   }
-  include site::firewall::defaults
-  include site::firewall::dropall
 
+  firewall {'000 accept icmp':
+    proto  => 'icmp',
+    action => 'accept',
+  }
+
+  firewall {'001 accept lo':
+    proto   => 'all',
+    iniface => 'lo',
+    action  => 'accept',
+  }
+
+  firewall {'002 accept established':
+    proto  => 'all',
+    state  => ['RELATED','ESTABLISHED'],
+    action => 'accept',
+  }
 }
