@@ -15,6 +15,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+# Generic configuration stuff
 class site (
   $secure = false,
   $admins = {},
@@ -43,4 +44,17 @@ class site (
     action => 'accept',
   }
 
+  # Updates
+  cron { 'yum update':
+    command => '/usr/bin/yum update --yes',
+    user    => 'root',
+    hour    => 1,
+    minute  => 0,
+  }
+  cron { 'puppet update':
+    command => '/usr/sbin/provision',
+    user    => 'root',
+    hour    => 3,
+    minute  => 0,
+  }
 }
