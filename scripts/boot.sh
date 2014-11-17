@@ -16,7 +16,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-image='centos-6.5-20140715'
+image='centos-6.6-20141116'
 flavor='m1.small'
 branch='master'
 
