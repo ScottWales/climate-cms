@@ -124,12 +124,12 @@ class roles::svnmirror (
   # Run a little webservice to listen for updates
   ensure_packages('python-cherrypy')
 
-  apacheplus::location {'/sync':
-    vhost           => $vhost,
-    order           => 'Deny,Allow',
-    allow           => "from ${origin_ip} ${::ipaddress_eth0} localhost",
-    deny            => 'from all',
-  }
+# apacheplus::location {'/sync':
+#   vhost           => $vhost,
+#   order           => 'Deny,Allow',
+#   allow           => "from ${origin_ip} ${::ipaddress_eth0} localhost",
+#   deny            => 'from all',
+# }
 
   # Sync server
   file {'/usr/local/bin/svnsync-listener.py':

@@ -37,7 +37,8 @@ manage_etc_hosts: localhost
 
 runcmd:
     - rpm -i http://yum.puppetlabs.com/puppetlabs-release-el-6.noarch.rpm
-    - yum -y install git puppet rubygems
+    - yum -y install git puppet rubygems yum-versionlock
+    - yum versionlock puppet
     - gem install --no-ri --no-rdoc librarian-puppet -v '<1.1.0'
     - git clone -b ${branch} https://github.com/ScottWales/svnmirror ${envpath}/production
     - ln -s /etc/puppet/{environments/production/,}hiera.yaml
