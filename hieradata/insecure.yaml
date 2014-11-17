@@ -3,7 +3,7 @@
 site::insecure: true
 
 # Secrets for accessing remote mirrors
-roles::svnmirror::mirrors:
-    um_ext:
-        origin_user:   user
-        origin_secret: not-a-secret
+# roles::svnmirror::mirrors:
+#   um_ext:
+#       origin_user:   user
+#       origin_secret: not-a-secret
