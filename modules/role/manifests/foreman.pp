@@ -18,4 +18,8 @@
 # Foreman and Puppetmaster
 class role::foreman {
 
+  class {'::foreman':
+
+  }
+
 }
