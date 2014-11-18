@@ -79,8 +79,11 @@ class role::foreman(
     server_storeconfigs_backend => 'puppetdb'
   }
 
-  include ::puppetdb
-  include ::puppetdb::master::config
+  class {'::puppetdb':
+    manage_dbserver => false,
+  }
+  class {'::puppetdb::master::config':
+  }
 
   # TODO r10k & environments
 }
