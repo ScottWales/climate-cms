@@ -43,6 +43,7 @@ class role::foreman(
 
     register_in_foreman  => true,
     registered_name      => $url,
+    port                 => $proxy_port,
     registered_proxy_url => "https://${url}:${proxy_port}",
     puppet_url           => "https://${url}:${puppet_port}",
 
@@ -54,6 +55,17 @@ class role::foreman(
     ssl_key              => "${puppet_home}/ssl/private_keys/${lower_url}.pem",
     puppet_ssl_cert      => "${puppet_home}/ssl/certs/${lower_url}.pem",
     puppet_ssl_key       => "${puppet_home}/ssl/private_keys/${lower_url}.pem",
+  }
+
+  class {'::puppet':
+    port                    => $puppet_port,
+
+    server                  => true,
+    server_certname         => $url,
+    server_foreman_url      => "https://${url}",
+    server_port             => $puppet_port,
+    server_foreman_ssl_cert => "${puppet_home}/ssl/certs/${lower_url}.pem",
+    server_foreman_ssl_key  => "${puppet_home}/ssl/private_keys/${lower_url}.pem",
   }
 
 
