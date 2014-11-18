@@ -22,6 +22,8 @@ class role::foreman(
   $puppet_home = '/var/lib/puppet'
   $lower_url   = downcase($url)
 
+  package {'centos-release-SCL': }
+
   class {'::foreman':
     foreman_url         => "https://${url}",
     servername          => $url,
@@ -31,6 +33,8 @@ class role::foreman(
     server_ssl_key      => "${puppet_home}/ssl/private_keys/${lower_url}.pem",
     websockets_ssl_cert => "${puppet_home}/ssl/certs/${lower_url}.pem",
     websockets_ssl_key  => "${puppet_home}/ssl/private_keys/${lower_url}.pem",
+    require             => Package['centos-release-SCL'],
   }
 
+  # TODO r10k & environments
 }
