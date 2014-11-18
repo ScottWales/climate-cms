@@ -61,6 +61,7 @@ class role::foreman(
     port                    => $puppet_port,
 
     server                  => true,
+    server_ca               => false,
     server_certname         => $url,
     server_foreman_url      => "https://${url}",
     server_port             => $puppet_port,
