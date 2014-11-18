@@ -1,4 +1,4 @@
-## \file    manifests/site.pp
+## \file    register/hostname.pp
 #  \author  Scott Wales <scott.wales@unimelb.edu.au>
 #
 #  Copyright 2014 ARC Centre of Excellence for Climate Systems Science
@@ -15,27 +15,12 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-# Generic server configs
-node default {
+# Register a hostname with the other servers
+define site::register::hostname (
+  $ip       = $::ipaddress_eth0,
+) {
 
-  # Puppet service
-  include site::puppet
-
-  # Yum updates
-  include site::updates
-
-  # Local hostnames
-  include site::hosts
-
-  # Setup firewall
-  resources {'firewall':
-    purge => true,
+  host {$name:
+    ip => $ip,
   }
-  Firewall {
-    require => Class[site::firewall::defaults],
-    before  => Class[site::firewall::dropall],
-  }
-  include site::firewall::defaults
-  include site::firewall::dropall
-
 }
