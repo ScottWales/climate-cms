@@ -22,4 +22,13 @@ class site::puppet {
     ensure => running,
     enable => true,
   }
+
+  # Run more often on test nodes
+  if $::environment == 'testing' {
+    augeas {'Increase agent frequency':
+      incl    => '/etc/puppet/puppet.conf',
+      lens    => 'Puppet.lns',
+      changes => 'set agent/runinterval 600'
+    }
+  }
 }
