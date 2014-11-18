@@ -37,6 +37,14 @@ class role::foreman(
     require             => Package['centos-release-SCL'],
   }
 
+  # Update apipie - http://projects.theforeman.org/issues/7063
+  exec {'gem install apipie-rails':
+    command => 'scl enable ruby193 "gem install apipie-rails"',
+    unless  => 'scl enable ruby193 "gem list --local" | grep apipie-rails',
+    path    => ['/bin','/usr/bin'],
+    before  => Class['::foreman_proxy'],
+  }
+
   class {'::foreman_proxy':
     foreman_base_url     => "https://${url}",
     trusted_hosts        => [$url],
