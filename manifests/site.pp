@@ -39,6 +39,6 @@ node default {
   include site::firewall::dropall
 
   Package {
-    allow_virtual => false,
+    allow_virtual => true,
   }
 }
