@@ -17,7 +17,9 @@
 
 # Foreman and Puppetmaster
 class role::foreman(
-  $url = $::fqdn,
+  $url         = $::fqdn,
+  $proxy_port  = 8443,
+  $puppet_port = 8140,
 ) {
   $puppet_home = '/var/lib/puppet'
   $lower_url   = downcase($url)
@@ -34,6 +36,26 @@ class role::foreman(
     configure_scl_repo  => false,
     require             => Package['centos-release-SCL'],
   }
+
+  class {'::foreman_proxy':
+    foreman_base_url     => "https://${url}",
+    trusted_hosts        => [$url],
+
+    register_in_foreman  => true,
+    registered_name      => $url,
+    registered_proxy_url => "https://${url}:${proxy_port}",
+    puppet_url           => "https://${url}:${puppet_port}",
+
+    dns                  => false,
+    dhcp                 => false,
+    tftp                 => false,
+
+    ssl_cert             => "${puppet_home}/ssl/certs/${lower_url}.pem",
+    ssl_key              => "${puppet_home}/ssl/private_keys/${lower_url}.pem",
+    puppet_ssl_cert      => "${puppet_home}/ssl/certs/${lower_url}.pem",
+    puppet_ssl_key       => "${puppet_home}/ssl/private_keys/${lower_url}.pem",
+  }
+
 
   # TODO r10k & environments
 }
