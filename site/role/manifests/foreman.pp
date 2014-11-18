@@ -38,9 +38,9 @@ class role::foreman(
   }
 
   # Update apipie - http://projects.theforeman.org/issues/7063
-  exec {'gem install apipie-rails':
-    command => 'scl enable ruby193 "gem install apipie-rails"',
-    unless  => 'scl enable ruby193 "gem list --local" | grep apipie-rails',
+  exec {'gem install apipie-bindings':
+    command => 'scl enable ruby193 "gem install apipie-bindings"',
+    unless  => 'scl enable ruby193 "gem list --local" | grep apipie-bindings',
     path    => ['/bin','/usr/bin'],
     before  => Class['::foreman_proxy'],
     require => Class['::foreman'],
@@ -67,17 +67,20 @@ class role::foreman(
   }
 
   class {'::puppet':
-    port                    => $puppet_port,
+    port                        => $puppet_port,
 
-    server                  => true,
-    server_ca               => false,
-    server_certname         => $url,
-    server_foreman_url      => "https://${url}",
-    server_port             => $puppet_port,
-    server_foreman_ssl_cert => "${puppet_home}/ssl/certs/${lower_url}.pem",
-    server_foreman_ssl_key  => "${puppet_home}/ssl/private_keys/${lower_url}.pem",
+    server                      => true,
+    server_ca                   => false,
+    server_certname             => $url,
+    server_foreman_url          => "https://${url}",
+    server_port                 => $puppet_port,
+    server_foreman_ssl_cert     => "${puppet_home}/ssl/certs/${lower_url}.pem",
+    server_foreman_ssl_key      => "${puppet_home}/ssl/private_keys/${lower_url}.pem",
+    server_storeconfigs_backend => 'puppetdb'
   }
 
+  include ::puppetdb
+  include ::puppetdb::master::config
 
   # TODO r10k & environments
 }
