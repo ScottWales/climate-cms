@@ -31,6 +31,7 @@ class role::foreman(
     server_ssl_key      => "${puppet_home}/ssl/private_keys/${lower_url}.pem",
     websockets_ssl_cert => "${puppet_home}/ssl/certs/${lower_url}.pem",
     websockets_ssl_key  => "${puppet_home}/ssl/private_keys/${lower_url}.pem",
+    configure_scl_repo  => false,
     require             => Package['centos-release-SCL'],
   }
 
