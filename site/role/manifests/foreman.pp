@@ -43,6 +43,7 @@ class role::foreman(
     unless  => 'scl enable ruby193 "gem list --local" | grep apipie-rails',
     path    => ['/bin','/usr/bin'],
     before  => Class['::foreman_proxy'],
+    require => Class['::foreman'],
   }
 
   class {'::foreman_proxy':
