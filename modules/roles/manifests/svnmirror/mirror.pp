@@ -17,8 +17,6 @@
 
 define roles::svnmirror::mirror (
   $origin,
-  $origin_user    = undef,
-  $origin_secret  = undef,
   $repo           = $name,
   $url            = "/${name}",
   $origin_ip      = $::roles::svnmirror::origin_ip,
@@ -34,15 +32,6 @@ define roles::svnmirror::mirror (
 
   # Filesystem location for the repo
   $path = "${home}/${repo}"
-
-  # Cache credentials
-  exec {"cache-credentials ${origin}":
-    path    => ['/bin','/usr/bin'],
-    command => "svn info --config-option servers:global:store-passwords=yes --config-option servers:global:store-plaintext-passwords=yes --username ${origin_user} --password ${origin_secret} ${origin}",
-    unless  => "svn info ${origin}",
-    user    => $user,
-    require => File["${home}/.subversion"],
-  }
 
   file {$path:
     ensure => directory,
