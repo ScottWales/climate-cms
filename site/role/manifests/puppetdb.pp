@@ -1,4 +1,4 @@
-## \file    manifests/site.pp
+## \file    puppetdb.pp
 #  \author  Scott Wales <scott.wales@unimelb.edu.au>
 #
 #  Copyright 2014 ARC Centre of Excellence for Climate Systems Science
@@ -15,33 +15,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-# Generic server configs
-node default {
-
-  # Puppet service
-  include site::puppet
-
-  # Yum updates
-  include site::updates
-
-  # Local hostnames
-  include site::hosts
-
-  # SSH access
-  include site::ssh
-
-  # Setup firewall
-  resources {'firewall':
-    purge => true,
-  }
-  Firewall {
-    require => Class[site::firewall::defaults],
-    before  => Class[site::firewall::dropall],
-  }
-  include site::firewall::defaults
-  include site::firewall::dropall
-
-  Package {
-    allow_virtual => true,
-  }
+# Puppet DB server
+class role::puppetdb {
+  include puppetdb
+  include puppetdb::master::config
 }

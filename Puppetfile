@@ -7,6 +7,7 @@ mod 'puppetlabs/inifile'
 mod 'puppetlabs/postgresql'
 mod 'puppetlabs/stdlib'
 mod 'puppetlabs/xinetd'
+mod 'saz/ssh'
 
 # Foreman and dependencies
 mod 'adrien/alternatives'
