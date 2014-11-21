@@ -8,3 +8,12 @@ roles::svnmirror::mirrors:
     um:
         url:       /svn/um
         origin:    https://code.metoffice.gov.uk/svn/um
+    gcom:
+        url:       /svn/gcom
+        origin:    https://code.metoffice.gov.uk/svn/gcom
+    jules:
+        url:       /svn/jules
+        origin:    https://code.metoffice.gov.uk/svn/jules
+    roses-u:
+        url:       /svn/roses-u
+        origin:    https://code.metoffice.gov.uk/svn/roses-u
