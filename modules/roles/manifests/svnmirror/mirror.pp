@@ -78,19 +78,19 @@ define roles::svnmirror::mirror (
     require   => Exec["svnsync init ${path}"],
   }
 
-# # The mirror is accessed from here
-# # Also allow access from the local machine's IP address for testing
-# apacheplus::location {$url:
-#   vhost           => $vhost,
-#   order           => 'Deny,Allow',
-#   allow           => "from ${access_ip} ${::ipaddress_eth0} localhost",
-#   deny            => 'from all',
-#   custom_fragment => "
-#     DAV                  svn
-#     SVNPath              ${path}
-#     SVNMasterURI         ${origin}
-#   "
-# }
+  # The mirror is accessed from here
+  # Also allow access from the local machine's IP address for testing
+  apacheplus::location {$url:
+    vhost           => $vhost,
+    order           => 'Deny,Allow',
+    allow           => "from ${access_ip} ${::ipaddress_eth0} localhost",
+    deny            => 'from all',
+    custom_fragment => "
+      DAV                  svn
+      SVNPath              ${path}
+      SVNMasterURI         ${origin}
+    "
+  }
 
 # # The origin site can push updates to here
 # apacheplus::location {"${url}-sync":

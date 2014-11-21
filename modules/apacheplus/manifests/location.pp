@@ -25,26 +25,25 @@ define apacheplus::location (
   $deny            = 'from none',
   $custom_fragment = '',
 ) {
-  #  if ! defined(Class['apache']) {
-  #    fail('You must include the apache class first')
-  #  }
-  #  $filename = regsubst($vhost, ' ', '_', 'G')
-  #  $config = "${::apache::vhost_dir}/${filename}.locations"
-  #
-  #
-  #  $_directories = {
-  #    path            => $path,
-  #    provider        => $provider,
-  #    order           => $order,
-  #    allow           => $allow,
-  #    deny            => $deny,
-  #    custom_fragment => $custom_fragment,
-  #  }
-  #
-  #  concat::fragment {"Location ${name}":
-  #    target  => $config,
-  #    content => template('apache/vhost/_directories.erb'),
-  #    order   => $priority,
-  #  }
+  if ! defined(Class['apache']) {
+    fail('You must include the apache class first')
+  }
+  $filename = regsubst($vhost, ' ', '_', 'G')
+  $config = "${::apache::vhost_dir}/${filename}.locations"
+
+  $_directories = {
+    path            => $path,
+    provider        => $provider,
+    order           => $order,
+    allow           => $allow,
+    deny            => $deny,
+    custom_fragment => $custom_fragment,
+  }
+
+  concat::fragment {"Location ${name}":
+    target  => $config,
+    content => template('apache/vhost/_directories.erb'),
+    order   => $priority,
+  }
 }
 
