@@ -42,7 +42,7 @@ class roles::svnmirror (
   $group          = 'apache',
   $origin_ip      = '127.0.0.1',
   $access_ip      = '127.0.0.1',
-  $update_minutes = 1,
+  $update_minutes = 10,
   $vhost          = $::fqdn,
 ) {
   $mirrors        = hiera_hash('roles::svnmirror::mirrors',{})
