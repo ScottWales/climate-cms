@@ -9,11 +9,7 @@ Openstack cloud, but should work with minor modifications at any site.
 Configuration
 -------------
 
-System configuration uses Hiera. Any private information should be added to
-`hieradata/$HOSTNAME.private.yaml` or `hieradata/private.yaml` on the server
-itself, these files should not be committed to the repository.
-[hieradata/insecure.yaml](hieradata/insecure.yaml) stores insecure secrets for
-testing, copy this file & change the secrets to create a secure version.
+System configuration uses Hiera. Secure information should be configured by connecting to the server directly and not entered into this repository
 
  * System admin accounts are configured in
    [hieradata/admins.yaml](hieradata/admins.yaml). Only users listed here will
@@ -23,6 +19,8 @@ testing, copy this file & change the secrets to create a secure version.
    [hieradata/$HOSTNAME.yaml](hieradata/svn.yaml)
 
  * Puppet defaults are set in [hieradata/common.yaml](hieradata/common.yaml)
+
+The server is automatically updated daily from this repository if shell access is not available
 
 Provisioning
 ------------
