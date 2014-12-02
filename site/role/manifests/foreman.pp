@@ -85,5 +85,10 @@ class role::foreman(
   class {'::puppetdb::master::config':
   }
 
-  # TODO r10k & environments
+  class {'::r10k':
+    remote => 'https://github.com/ScottWales/climate-cms',
+  }
+  class {'::r10k::postrun_command':
+
+  }
 }
