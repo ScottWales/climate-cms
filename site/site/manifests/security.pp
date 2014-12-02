@@ -19,6 +19,10 @@ class site::security {
   include site::firewall::defaults
   include site::firewall::dropall
 
+  resources {'firewall':
+    purge => true,
+  }
+
   cron {'yum update':
     command => 'yum update -y',
     hour    => 1,

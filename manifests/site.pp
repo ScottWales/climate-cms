@@ -27,22 +27,12 @@ node default {
   # Local hostnames
   include site::hosts
 
-  # SSH access
-  include site::ssh
+  # Server security
+  include site::security
 
-  # Setup firewall
-  resources {'firewall':
-    purge => true,
-  }
   Firewall {
     require => Class[site::firewall::defaults],
     before  => Class[site::firewall::dropall],
-  }
-  include site::firewall::defaults
-  include site::firewall::dropall
-
-  Package {
-    allow_virtual => true,
   }
 
   user {'swales':
@@ -53,5 +43,12 @@ node default {
     user => 'swales',
     type => 'ssh-rsa',
     key  => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQC66UV5uI+2k1WtgefX33ugqS+6trtMnD3bzkQZm6hCRe1Zjt8cABiBx06yNRECjTYX1Crfh8sOzwFTH6NlhF0oEg4iSv3WWutAOROONoKKsMFr0m3e31dUVwf0BrpuCt0HqJ/Z+lKgzB6Cz1vPTjfMjn2ut0So3u3zTpZjIYputEweAjF/FQEzlNjx9FmMcOMC0XrEDYdMrKq/9dwmXHT/4W6w9LC4sBsXVB+Cs2xcmxoD+K5j1PlUUIM9ffJxU5uGF90eR2GH3ZM2+R34uE/8LQutE3ctRDM+sHOrhyMFo+4Hqc0QtyWkBF/IGa5tfd0MNxKKuh/1l6SHQW2gLbaL',
+  }
+  mailalias {'root':
+    recipient => 'scott.wales@unimelb.edu.au',
+  }
+
+  Package {
+    allow_virtual => true,
   }
 }

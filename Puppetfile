@@ -8,6 +8,7 @@ mod 'puppetlabs/postgresql'
 mod 'puppetlabs/stdlib'
 mod 'puppetlabs/xinetd'
 mod 'saz/ssh'
+mod 'zack/r10k'
 
 # Foreman and dependencies
 mod 'adrien/alternatives'
