@@ -37,7 +37,7 @@ cat > /etc/hiera.yaml << EOF
 :backends:
     - yaml
 :hierarchy:
-    - nodes/%{fqdn}
+    - nodes/%{hostname}
     - common
 :yaml:
     :datadir: /etc/puppet/environments/%{environment}/hiera
