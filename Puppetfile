@@ -7,6 +7,8 @@ mod 'puppetlabs/inifile'
 mod 'puppetlabs/postgresql'
 mod 'puppetlabs/stdlib'
 mod 'puppetlabs/xinetd'
+mod 'puppetlabs/ruby'
+
 mod 'saz/ssh'
 mod 'zack/r10k'
 mod 'stahnma/epel'

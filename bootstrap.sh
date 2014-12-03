@@ -47,4 +47,4 @@ ln -sf /etc/hiera.yaml /etc/puppet/hiera.yaml
 # Provision the server
 r10k deploy environment --verbose --puppetfile
 environment=/etc/puppet/environments/testing
-puppet apply $environment/manifests/site.pp --modulepath $environment/site:$environment/modules
+puppet apply $environment/manifests/site.pp --modulepath $environment/site:$environment/modules --environment testing
