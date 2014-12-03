@@ -27,11 +27,15 @@ node default {
   # Server security
   include site::security
 
+  # Allow ssh access
+  include site::firewall::ssh
+
   Firewall {
     require => Class[site::firewall::defaults],
     before  => Class[site::firewall::dropall],
   }
 
+  # Admin user
   user {'swales':
     ensure     => present,
     managehome => true,
