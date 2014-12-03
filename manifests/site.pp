@@ -18,6 +18,9 @@
 # Generic server configs
 node default {
 
+  # Hiera roles
+  hiera_include('roles')
+
   # Puppet service
   include site::puppet
 
