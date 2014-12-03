@@ -9,6 +9,7 @@ mod 'puppetlabs/stdlib'
 mod 'puppetlabs/xinetd'
 mod 'saz/ssh'
 mod 'zack/r10k'
+mod 'stahnma/epel'
 
 # Foreman and dependencies
 mod 'adrien/alternatives'

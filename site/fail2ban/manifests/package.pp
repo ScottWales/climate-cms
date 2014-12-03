@@ -16,6 +16,9 @@
 #  limitations under the License.
 
 class fail2ban::package {
+  include ::epel
+
   package {'fail2ban':
+    require => Class['epel']
   }
 }

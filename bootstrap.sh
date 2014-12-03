@@ -42,6 +42,7 @@ cat > /etc/hiera.yaml << EOF
 :yaml:
     :datadir: /etc/puppet/environments/%{environment}/hiera
 EOF
+ln -sf /etc/hiera.yaml /etc/puppet/hiera.yaml
 
 # Provision the server
 r10k deploy environment --verbose --puppetfile
