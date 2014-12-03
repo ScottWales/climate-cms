@@ -19,13 +19,23 @@ class site::security {
   include site::firewall::defaults
   include site::firewall::dropall
 
-  firewallchain {'INPUT:filter:ipv4':
+  firewallchain {'INPUT:filter:IPv4':
     purge  => true,
+    policy => 'drop',
     ignore => '-j fail2ban-.*',
   }
-  firewallchain {'INPUT:filter:ipv6':
+  firewallchain {'INPUT:filter:IPv6':
     purge  => true,
+    policy => 'drop',
     ignore => '-j fail2ban-.*',
+  }
+  firewallchain {'FORWARD:filter:IPv4':
+    purge  => true,
+    policy => 'drop',
+  }
+  firewallchain {'FORWARD:filter:IPv6':
+    purge  => true,
+    policy => 'drop',
   }
 
   cron {'yum update':
