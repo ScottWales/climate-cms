@@ -19,6 +19,7 @@ class fail2ban::package {
   include ::epel
 
   package {'fail2ban':
-    require => Class['epel']
+    require => Class['epel'],
+    before  => Class['fail2ban::service'],
   }
 }
