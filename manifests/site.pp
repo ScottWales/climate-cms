@@ -21,9 +21,6 @@ node default {
   # Puppet service
   include site::puppet
 
-  # Yum updates
-  include site::updates
-
   # Local hostnames
   include site::hosts
 

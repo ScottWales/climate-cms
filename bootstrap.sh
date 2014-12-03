@@ -16,20 +16,23 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+set -x
+
 # Install Puppet
 rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-el-6.noarch.rpm
-yum install -y puppet
-gem install r10k
+yum install -y puppet git
+#gem install r10k --no-ri --no-rdoc --verbose
 
 # Configure environments
-echo /etc/r10k.yaml << EOF
+cat > /etc/r10k.yaml << EOF
 :cachedir: '/var/cache/r10k'
 :sources:
-    puppet: 'https://github.com/ScottWales/climate-cms
-    basedir: '/etc/puppet/environments'
+    :puppet: 
+        remote: 'https://github.com/ScottWales/climate-cms'
+        basedir: '/etc/puppet/environments'
 EOF
 
-echo /etc/hiera.yaml << EOF
+cat > /etc/hiera.yaml << EOF
 ---
 :backends:
     - yaml
@@ -41,5 +44,6 @@ echo /etc/hiera.yaml << EOF
 EOF
 
 # Provision the server
-r10k deploy environment -p
-puppet agent -t --environment test
+r10k deploy environment --verbose --puppetfile
+environment=/etc/puppet/environments/testing
+puppet apply $environment/manifests/site.pp --modulepath $environment/site:$environment/modules
