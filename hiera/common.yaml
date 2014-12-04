@@ -1,1 +1,4 @@
 ---
+# Apache configs
+apache::default_vhost: false
+apache::default_mods:  false
