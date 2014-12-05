@@ -2,3 +2,6 @@
 # Apache configs
 apache::default_vhost: false
 apache::default_mods:  false
+
+# Use r10k to setup environments
+puppet::server_environments: []

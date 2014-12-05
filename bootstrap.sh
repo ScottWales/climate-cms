@@ -25,11 +25,14 @@ gem install r10k --no-ri --no-rdoc --verbose
 
 # Configure environments
 cat > /etc/r10k.yaml << EOF
-:cachedir: '/var/cache/r10k'
+:cachedir: /var/cache/r10k
 :sources:
-    :puppet: 
-        remote: 'https://github.com/ScottWales/climate-cms'
-        basedir: '/etc/puppet/environments'
+  puppet:
+    basedir: /etc/puppet/environments
+    remote: https://github.com/ScottWales/climate-cms
+
+:purgedirs:
+  - /etc/puppet/environments
 EOF
 
 cat > /etc/hiera.yaml << EOF
@@ -48,3 +51,6 @@ ln -sf /etc/hiera.yaml /etc/puppet/hiera.yaml
 r10k deploy environment --verbose --puppetfile
 environment=/etc/puppet/environments/testing
 puppet apply $environment/manifests/site.pp --modulepath $environment/site:$environment/modules --environment testing
+
+sleep 10
+puppet agent --test
