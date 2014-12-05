@@ -80,12 +80,13 @@ class role::foreman(
     server_port                 => $puppet_port,
     server_foreman_ssl_cert     => "${puppet_home}/ssl/certs/${lower_url}.pem",
     server_foreman_ssl_key      => "${puppet_home}/ssl/private_keys/${lower_url}.pem",
-    #server_storeconfigs_backend => 'puppetdb'
+    server_storeconfigs_backend => 'puppetdb',
+    require                     => Class['puppetdb'],
   }
 
-  #class {'::puppetdb':
-  #  manage_dbserver => false,
-  #}
+  class {'::puppetdb':
+    manage_dbserver => false,
+  }
   #class {'::puppetdb::master::config':
   #  }
 
