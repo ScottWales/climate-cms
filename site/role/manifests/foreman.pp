@@ -92,4 +92,8 @@ class role::foreman(
   class {'::r10k':
     remote => 'https://github.com/ScottWales/climate-cms',
   }
+  cron {'r10k':
+    command => '/usr/bin/r10k deploy environment --puppetfile',
+    minute  => '*/10',
+  }
 }
