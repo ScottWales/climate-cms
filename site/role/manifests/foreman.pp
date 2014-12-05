@@ -26,6 +26,8 @@ class role::foreman(
 
   package {'centos-release-SCL': }
 
+  include ::apache::mod::version
+
   class {'::foreman':
     foreman_url         => "https://${url}",
     servername          => $url,
