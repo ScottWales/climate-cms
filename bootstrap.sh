@@ -21,7 +21,7 @@ set -x
 # Install Puppet
 rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-el-6.noarch.rpm
 yum install -y puppet git
-gem install r10k --no-ri --no-rdoc --verbose
+gem list --local | grep r10k || gem install r10k --no-ri --no-rdoc
 
 # Configure environments
 cat > /etc/r10k.yaml << EOF
@@ -52,5 +52,3 @@ r10k deploy environment --verbose --puppetfile
 environment=/etc/puppet/environments/testing
 puppet apply $environment/manifests/site.pp --modulepath $environment/site:$environment/modules --environment testing
 
-sleep 10
-puppet agent --test
