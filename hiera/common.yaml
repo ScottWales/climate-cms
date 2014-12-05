@@ -5,3 +5,5 @@ apache::default_mods:  false
 
 # Use r10k to setup environments
 puppet::server_environments: []
+puppet::server_common_modules_path: 
+    - '/etc/puppet/modules'
