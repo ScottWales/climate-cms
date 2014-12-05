@@ -91,7 +91,4 @@ class role::foreman(
   class {'::r10k':
     remote => 'https://github.com/ScottWales/climate-cms',
   }
-  class {'::r10k::postrun_command':
-
-  }
 }
