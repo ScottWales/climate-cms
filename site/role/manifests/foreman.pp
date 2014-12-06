@@ -87,8 +87,10 @@ class role::foreman(
   class {'::puppetdb':
     manage_dbserver => false,
   }
-  #class {'::puppetdb::master::config':
-  #  }
+  class {'::puppetdb::master::config':
+    manage_storeconfigs     => false,
+    manage_report_processor => false,
+  }
 
   class {'::r10k':
     remote => 'https://github.com/ScottWales/climate-cms',
