@@ -90,6 +90,8 @@ class role::foreman(
   class {'::puppetdb::master::config':
     manage_storeconfigs     => false,
     manage_report_processor => false,
+    ssl_cert_path           => "${puppet_home}/ssl/certs/${lower_url}.pem",
+    ssl_key_path            => "${puppet_home}/ssl/private_keys/${lower_url}.pem",
   }
 
   class {'::r10k':
