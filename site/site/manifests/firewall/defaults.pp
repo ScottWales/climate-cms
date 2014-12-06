@@ -38,4 +38,24 @@ class site::firewall::defaults {
     state  => ['RELATED','ESTABLISHED'],
     action => 'accept',
   }
+
+  firewall {'000 accept icmp ip6':
+    proto    => 'icmp',
+    action   => 'accept',
+    provider => 'ip6tables',
+  }
+
+  firewall {'001 accept lo ip6':
+    proto    => 'all',
+    iniface  => 'lo',
+    action   => 'accept',
+    provider => 'ip6tables',
+  }
+
+  firewall {'002 accept established ip6':
+    proto    => 'all',
+    state    => ['RELATED','ESTABLISHED'],
+    action   => 'accept',
+    provider => 'ip6tables',
+  }
 }
