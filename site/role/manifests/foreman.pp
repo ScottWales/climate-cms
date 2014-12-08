@@ -86,8 +86,7 @@ class role::foreman(
 
   class {'::puppetdb':
     manage_dbserver => false,
-    ssl_cert_path   => "${puppet_home}/ssl/certs/${lower_url}.pem",
-    ssl_key_path    => "${puppet_home}/ssl/private_keys/${lower_url}.pem",
+    disable_ssl     => true,
   }
   class {'::puppetdb::master::config':
     manage_storeconfigs     => false,
