@@ -16,10 +16,6 @@
 #  limitations under the License.
 
 class role::puppetmaster {
-  before Class['::Puppet']
-
-  Class ['::Puppet'] {
-    server => true,
-  }
-
+  include ::puppet::server
+  Class[::puppet] -> Class[::puppet::server]
 }
