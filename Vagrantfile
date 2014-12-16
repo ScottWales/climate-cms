@@ -6,8 +6,12 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "chef/centos-6.6"
-  config.vm.hostname = "controller.vagrant"
-  config.vm.network "forwarded_port", guest: 443, host: 8080
+  config.vm.provision "shell", path: "startup.sh"
 
-  config.vm.provision "shell", path: "bootstrap.sh"
+  config.vm.define "backend" do |backend|
+      config.vm.provision "shell", path: "bootstrap.sh"
+  end
+  config.vm.define "frontend" do |frontend|
+  end
+
 end

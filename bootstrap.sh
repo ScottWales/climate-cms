@@ -18,9 +18,8 @@
 
 set -x
 
-# Install Puppet
-rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-el-6.noarch.rpm
-yum install -y puppet git
+# Install r10k & pre-reqs
+yum install -y git
 gem list --local | grep r10k || gem install r10k --no-ri --no-rdoc
 
 # Configure environments
