@@ -18,7 +18,7 @@
 class role::common {
 
   # Puppet service
-  include site::puppet
+  include role::puppet
 
   # Local hostnames
   include site::hosts
