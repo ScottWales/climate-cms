@@ -16,6 +16,4 @@
 #  limitations under the License.
 
 class role::puppetmaster {
-  include ::puppet::server
-  Class[::puppet] -> Class[::puppet::server]
 }

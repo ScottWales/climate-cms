@@ -9,6 +9,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "shell", path: "startup.sh"
 
   config.vm.define "backend" do |node|
+      node.vm.hostname = "backend"
       node.vm.provision "shell", path: "bootstrap.sh"
   end
   config.vm.define "frontend" do |node|
