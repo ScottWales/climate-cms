@@ -17,6 +17,5 @@
 
 # Puppet DB server
 class role::puppetdb {
-  include puppetdb
-  include puppetdb::master::config
+  include ::puppetdb
 }

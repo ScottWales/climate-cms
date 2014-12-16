@@ -16,4 +16,5 @@
 #  limitations under the License.
 
 class role::puppetmaster {
+  include ::puppetdb::master::config
 }

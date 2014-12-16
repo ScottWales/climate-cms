@@ -1,5 +1,11 @@
 ---
 roles:
     - role::puppetmaster
+    - role::puppetdb
 
 puppet::server: true
+puppet::server_reports: puppetdb
+puppet::server_storeconfigs_backend: puppetdb
+
+puppetdb::manage_storeconfigs: false
+puppetdb::manage_report_processor: false
