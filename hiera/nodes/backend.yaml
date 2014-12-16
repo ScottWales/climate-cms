@@ -7,6 +7,5 @@ puppet::server: true
 puppet::server_reports: puppetdb
 puppet::server_storeconfigs_backend: puppetdb
 
-puppetdb::ssl_listen_address: localhost
 puppetdb::manage_storeconfigs: false
 puppetdb::manage_report_processor: false
