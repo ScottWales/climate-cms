@@ -1,3 +1,5 @@
 ---
 roles:
     - role::puppetmaster
+
+puppet::server: true
