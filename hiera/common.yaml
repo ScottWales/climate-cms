@@ -1,6 +1,6 @@
 ---
 roles:
-    - common
+    - role::common
 
 # Apache configs
 apache::default_vhost: false
