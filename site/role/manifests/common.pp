@@ -29,6 +29,10 @@ class role::common {
   # Allow ssh access
   include site::firewall::ssh
 
+  host { $::fqdn:
+    ip => $::ipaddress_eth0,
+  }
+
   # Admin user
   user {'swales':
     ensure     => present,
