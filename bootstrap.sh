@@ -28,7 +28,8 @@ cat > /etc/r10k.yaml << EOF
 :sources:
   puppet:
     basedir: /etc/puppet/environments
-    remote: https://github.com/ScottWales/climate-cms
+#    remote: https://github.com/ScottWales/climate-cms
+    remote: /vagrant
 
 :purgedirs:
   - /etc/puppet/environments
@@ -48,6 +49,9 @@ ln -sf /etc/hiera.yaml /etc/puppet/hiera.yaml
 
 # Provision the server
 r10k deploy environment --verbose --puppetfile
-environment=/etc/puppet/environments/testing
-puppet apply $environment/manifests/site.pp --modulepath $environment/site:$environment/modules --environment testing
+
+environment=testing
+puppet=/etc/puppet/environments/$environment
+
+puppet apply $puppet/manifests/site.pp --modulepath $puppet/local:$puppet/modules --environment $environment
 
