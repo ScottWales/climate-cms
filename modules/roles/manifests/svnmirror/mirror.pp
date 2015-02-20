@@ -71,7 +71,7 @@ define roles::svnmirror::mirror (
   }
 
   # Do regular pulls
-  cron {"svnsync sync ${path}":
+  cronic {"svnsync sync ${path}":
     command   => "/usr/bin/svnsync sync --non-interactive file://${path}",
     user      => $user,
     minute    => "*/${update_minutes}",
