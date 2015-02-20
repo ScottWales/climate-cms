@@ -111,6 +111,10 @@ class roles::svnmirror (
     purge_ssh_keys => true,
   }
 
+  mailalias {$user:
+    recipient => 'root',
+  }
+
   # Sync user credential store
   file {"${home}/.subversion":
     ensure => directory,
