@@ -17,11 +17,26 @@
 
 # Generic configuration stuff
 class site (
-  $secure = false,
-  $admins = {},
+  $hostname = $::hostname,
+  $domain   = $::domain,
+  $secure   = false,
+  $admins   = {},
 ) {
   if ! $secure {
     warning('Not using secure passwords or certificates')
+  }
+
+  service { 'network': }
+
+  host { "${hostname}.${domain}":
+    host_aliases => $hostname,
+    ip           => $::ipaddress_eth0,
+    notify       => Service['network'],
+  }
+  file { '/etc/hostname':
+    ensure  => file,
+    content => "${hostname}\n",
+    notify  => Service['network'],
   }
 
   file {'/usr/sbin/provision':
