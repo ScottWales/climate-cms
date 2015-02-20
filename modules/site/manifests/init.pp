@@ -25,6 +25,7 @@ class site (
   if ! $secure {
     warning('Not using secure passwords or certificates')
   }
+  include ::ntp
 
   service { 'network': }
 
