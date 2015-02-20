@@ -39,4 +39,10 @@ define site::admin (
     content => "${name} ALL=NOPASSWD:ALL",
   }
 
+  if $mail {
+    mailalias {$name:
+      recipient => $mail,
+    }
+  }
+
 }

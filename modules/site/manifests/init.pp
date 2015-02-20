@@ -37,6 +37,12 @@ class site (
 
   create_resources('site::admin',$admins)
 
+  # Send root mail to admins
+  $admin_names = keys($admins)
+  mailalias {'root':
+    recipient => $admin_names,
+  }
+
   # Allow SSH
   firewall { '022 accept ssh':
     proto  => 'tcp',
