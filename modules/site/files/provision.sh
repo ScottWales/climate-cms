@@ -16,8 +16,10 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+set -eu
+
 export HOME=/home/ec2-user
 cd /etc/puppet/environments/production
 git pull
 librarian-puppet install --verbose
-puppet apply --environmentpath='/etc/puppet/environments' manifests/site.pp
+puppet apply --detailed-exitcodes --environmentpath='/etc/puppet/environments' manifests/site.pp

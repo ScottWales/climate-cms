@@ -68,7 +68,7 @@ class site (
 
   # Updates
   cron { 'yum update':
-    command => '/usr/bin/yum update --yes',
+    command => '/usr/bin/yum update --assumeyes',
     user    => 'root',
     hour    => 1,
     minute  => 0,
