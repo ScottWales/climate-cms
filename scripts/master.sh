@@ -19,7 +19,7 @@
 master_ip=127.0.0.1
 image='centos-6.6-20150129'
 flavor='m1.small'
-environment='test'
+environment='puppetmaster'
 
 userdata="#!/bin/bash
 set -xeu
@@ -28,7 +28,7 @@ set -xeu
 echo '${master_ip} puppet' >> /etc/hosts
 rpm -i http://yum.puppetlabs.com/puppetlabs-release-el-6.noarch.rpm
 yum clean all
-yum makecache
+yum makecache -q
 yum install -y -q puppet-server
 service puppetmaster restart
 puppet cert list --all
@@ -36,13 +36,14 @@ puppet cert list --all
 # Install r10k
 yum install -y -q rubygems git
 gem install r10k --no-ri --no-rdoc
-cat > /etc/r10k.yaml << X
+cat > /etc/r10k.yaml << EOF
 :cachedir: '/var/cache/r10k'
 :sources:
     :coecms:
-        remote:  'https://github.com/ScottWales/puppet'
+        remote:  'https://github.com/ScottWales/climate-cms'
         basedir: '/etc/puppet/environments'
-X
+EOF
+ln -s /etc/puppet/environments/${environment}/hiera.yaml /etc/puppet/hiera.yaml
 
 # Deploy
 r10k deploy environment -p
