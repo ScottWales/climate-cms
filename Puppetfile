@@ -6,5 +6,3 @@ mod 'puppetlabs/firewall'
 mod 'puppetlabs/ntp'
 
 mod 'saz/sudo'
-
-mod 'ajcrowe/supervisord'

@@ -59,9 +59,6 @@ class roles::svnmirror (
   # Get latest svn from Wandisco
   include ::wandisco
 
-  # Process control
-  include ::supervisord
-
   ensure_packages('subversion')
   ensure_packages('mod_dav_svn')
 
@@ -124,27 +121,4 @@ class roles::svnmirror (
 
   # Create mirrors listed in hiera
   create_resources('::roles::svnmirror::mirror', $mirrors)
-
-  # Run a little webservice to listen for updates
-  ensure_packages('python-cherrypy')
-
-# apacheplus::location {'/sync':
-#   vhost           => $vhost,
-#   order           => 'Deny,Allow',
-#   allow           => "from ${origin_ip} ${::ipaddress_eth0} localhost",
-#   deny            => 'from all',
-# }
-
-  # Sync server
-  file {'/usr/local/bin/svnsync-listener.py':
-    source => 'puppet:///modules/roles/svnmirror/update-service.py',
-    owner  => $user,
-    group  => $group,
-    notify => Class['supervisord::reload'],
-  }
-
-  supervisord::program {'svnsync-listener':
-    command   => '/usr/bin/python /usr/local/bin/svnsync-listener.py',
-    user      => $user,
-  }
 }
