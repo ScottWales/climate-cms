@@ -30,6 +30,16 @@ rpm -i http://yum.puppetlabs.com/puppetlabs-release-el-6.noarch.rpm
 yum clean all
 yum makecache -q
 yum install -y -q puppet-server
+cat > /etc/puppet/puppet.conf << EOF
+[main]
+    logdir = /var/log/puppet
+    rundir = /var/run/puppet
+    ssldir = $vardir/ssl
+    environmentpath = $confdir/environments
+[agent]
+    classfile = $vardir/classes.txt
+    localconfig = $vardir/localconfig
+EOF
 service puppetmaster restart
 puppet cert list --all
 
