@@ -1,0 +1,13 @@
+---
+:backends:
+    - yaml
+:yaml:
+    :datadir: "/etc/puppet/environments/%{::environment}/hieradata"
+:hierarchy:
+    - "%{::hostname}.private"
+    - "private"
+    - "%{::hostname}"
+    - "insecure"
+    - "admins"
+    - "common"
+:merge_behavior: deeper

@@ -1,0 +1,13 @@
+---
+# Classes is an array of Puppet modules to run
+classes:
+    - roles::svnmirror
+    - site
+
+
+# Default class arguments
+apache::default_vhost: false
+apache::default_mods:  false
+
+supervisord::executable:       /usr/bin/supervisord
+supervisord::executable_ctl:   /usr/bin/supervisorctl
