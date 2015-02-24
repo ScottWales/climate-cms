@@ -4,7 +4,6 @@ classes:
     - roles::svnmirror
     - site
 
-
 # Default class arguments
 apache::default_vhost: false
 apache::default_mods:  false
