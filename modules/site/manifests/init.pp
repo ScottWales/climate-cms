@@ -70,7 +70,7 @@ class site (
   class {'yum_cron':
     check_only => 'no',
   }
-  cron { 'puppet update':
+  cronic { 'puppet update':
     command => '/usr/sbin/provision',
     user    => 'root',
     hour    => 3,
