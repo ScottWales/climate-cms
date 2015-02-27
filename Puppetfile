@@ -7,3 +7,4 @@ mod 'puppetlabs/ntp'
 mod 'puppetlabs/concat'
 
 mod 'saz/sudo'
+mod 'treydock/yum_cron'
