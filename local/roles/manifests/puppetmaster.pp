@@ -41,4 +41,11 @@ class roles::puppetmaster (
     notify  => Service['puppet'],
   }
 
+  firewall {'140 puppetmaster':
+    proto  => 'tcp',
+    port   => '8140',
+    source => '10.0.0.0/16',
+    action => 'accept',
+  }
+
 }
