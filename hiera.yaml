@@ -4,9 +4,9 @@
 :yaml:
     :datadir: "/etc/puppet/environments/%{::environment}/hieradata"
 :hierarchy:
-    - "%{::hostname}.private"
+    - "server/%{::hostname}.private"
     - "private"
-    - "%{::hostname}"
+    - "server/%{::hostname}"
     - "insecure"
     - "admins"
     - "common"
