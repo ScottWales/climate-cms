@@ -23,14 +23,9 @@ environment='puppetmaster'
 hostname='test'
 
 setup_master="
-# Install server
-yum install -y -q puppetserver
-sed -e '/JAVA_ARGS/s/2g/512m/g' -i /etc/sysconfig/puppetserver
-service puppetserver restart
-puppet cert list --all
+yum install -y -q puppetserver rubygems git
 
 # Install r10k
-yum install -y -q rubygems git
 gem install r10k --no-ri --no-rdoc
 cat > /etc/r10k.yaml << EOF
 :cachedir: '/var/cache/r10k'
@@ -39,10 +34,15 @@ cat > /etc/r10k.yaml << EOF
         remote:  'https://github.com/ScottWales/climate-cms'
         basedir: '/etc/puppet/environments'
 EOF
+
+# Deploy environments
+r10k deploy environment --puppetfile --verbose
 ln -s /etc/puppet/environments/${environment}/hiera.yaml /etc/puppet/hiera.yaml
 
-# Deploy
-r10k deploy environment -p -v
+# Start server
+sed -e '/JAVA_ARGS/s/2g/512m/g' -i /etc/sysconfig/puppetserver
+service puppetserver restart
+puppet cert list --all
 "
 
 userdata="#!/bin/bash
@@ -65,11 +65,11 @@ cat > /etc/puppet/puppet.conf << EOF
     logdir = /var/log/puppet
     rundir = /var/run/puppet
     ssldir = \\\$vardir/ssl
-    environment = ${environment}
     environmentpath = \\\$confdir/environments
 [agent]
     classfile = \\\$vardir/classes.txt
     localconfig = \\\$vardir/localconfig
+    environment = ${environment}
 EOF
 
 ${setup_master}
