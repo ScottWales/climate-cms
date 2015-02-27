@@ -36,7 +36,7 @@ class roles::puppetmaster (
   augeas { 'r10k':
     lens    => 'Puppet.lns',
     incl    => '/etc/puppet/puppet.conf',
-    changes => 'set agent/postrun_command "/usr/bin/r10k deploy enviornment --puppetfile"',
+    changes => 'set agent/postrun_command "/usr/bin/r10k deploy environment --puppetfile"',
     require => File['/etc/puppet/puppet.conf'],
     notify  => Service['puppet'],
   }

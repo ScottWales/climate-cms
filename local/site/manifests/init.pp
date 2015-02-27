@@ -40,11 +40,6 @@ class site (
     notify  => Service['network'],
   }
 
-  file {'/usr/sbin/provision':
-    source => 'puppet:///modules/site/provision.sh',
-    mode   => '0500',
-  }
-
   # Don't require a tty for sudoers
   sudo::conf {'requiretty':
     priority => 10,
