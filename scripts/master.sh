@@ -20,8 +20,10 @@ master_ip=127.0.0.1
 image='centos-6.6-20150129'
 flavor='m1.small'
 environment='puppetmaster'
+hostname='test'
 
 userdata="#!/bin/bash
+echo
 set -xeu
 
 # Install Puppet Master
@@ -29,9 +31,12 @@ echo '${master_ip} puppet' >> /etc/hosts
 rpm -i http://yum.puppetlabs.com/puppetlabs-release-el-6.noarch.rpm
 yum clean all
 yum makecache -q
-yum install -y -q puppet-server
+
+# Setup Puppet
+yum install -y -q puppet
 cat > /etc/puppet/puppet.conf << EOF
 [main]
+    certname = ${hostname}
     logdir = /var/log/puppet
     rundir = /var/run/puppet
     ssldir = \\\$vardir/ssl
@@ -40,6 +45,10 @@ cat > /etc/puppet/puppet.conf << EOF
     classfile = \\\$vardir/classes.txt
     localconfig = \\\$vardir/localconfig
 EOF
+
+# Install server
+yum install -y -q puppetserver
+sed -e '/JAVA_ARGS/s/2g/512m/g' -i /etc/sysconfig/puppetserver
 service puppetserver restart
 puppet cert list --all
 
@@ -57,12 +66,12 @@ ln -s /etc/puppet/environments/${environment}/hiera.yaml /etc/puppet/hiera.yaml
 
 # Deploy
 r10k deploy environment -p -v
-puppet agent -t --environment ${environment}
+puppet agent --color=false --test --environment ${environment} || true
 "
 
-nova boot "test" \
-    --image $image \
-    --flavor $flavor \
+nova boot "$hostname" \
+    --image "$image" \
+    --flavor "$flavor" \
     --user-data <(echo "$userdata") \
     --key-name walesnix \
     --security-groups ssh \

@@ -19,7 +19,9 @@
 class roles::puppetmaster (
 ) {
 
-  package { 'puppet-server': }
+  package { 'puppetserver':
+    ensure => present,
+  }
   service { 'puppetserver':
     ensure  => running,
     enable  => true,
