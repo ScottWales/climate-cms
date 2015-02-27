@@ -8,10 +8,10 @@ Boot the master server (required before any others)
 
     ./boot puppet
 
-Boot an agent server
+Boot an agent server and register it with Puppet
 
-    ./boot HOSTNAME
-    ssh puppet.fqdn puppet cert sign HOSTNAME
+    ./boot svn
+    ssh admin@puppet sudo puppet cert sign svn
 
 Servers will be configured with the puppet classes listed in
 `hieradata/server/HOSTNAME.yaml`. Generally this will be a list of role
