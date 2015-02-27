@@ -26,26 +26,26 @@ if [ "$hostname" == 'puppet' ]; then
     # This is the Puppetmaster, we'll need to set that up
     master_ip=127.0.0.1
     setup_master="
-    yum install -y -q puppetserver rubygems git
+yum install -y -q puppetserver rubygems git
 
-    # Install r10k
-    gem install r10k --no-ri --no-rdoc
-    cat > /etc/r10k.yaml << EOF
-    :cachedir: '/var/cache/r10k'
-    :sources:
-        :coecms:
-            remote:  'https://github.com/ScottWales/climate-cms'
-            basedir: '/etc/puppet/environments'
-    EOF
+# Install r10k
+gem install r10k --no-ri --no-rdoc
+cat > /etc/r10k.yaml << EOF
+:cachedir: '/var/cache/r10k'
+:sources:
+    :coecms:
+        remote:  'https://github.com/ScottWales/climate-cms'
+        basedir: '/etc/puppet/environments'
+EOF
 
-    # Deploy environments
-    r10k deploy environment --puppetfile --verbose
-    ln -s /etc/puppet/environments/${environment}/hiera.yaml /etc/puppet/hiera.yaml
+# Deploy environments
+r10k deploy environment --puppetfile --verbose
+ln -s /etc/puppet/environments/${environment}/hiera.yaml /etc/puppet/hiera.yaml
 
-    # Start server
-    sed -e '/JAVA_ARGS/s/2g/512m/g' -i /etc/sysconfig/puppetserver
-    service puppetserver restart
-    puppet cert list --all
+# Start server
+sed -e '/JAVA_ARGS/s/2g/512m/g' -i /etc/sysconfig/puppetserver
+service puppetserver restart
+puppet cert list --all
     "
 else
     # Get the master's IP
