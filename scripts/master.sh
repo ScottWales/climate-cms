@@ -34,11 +34,11 @@ cat > /etc/puppet/puppet.conf << EOF
 [main]
     logdir = /var/log/puppet
     rundir = /var/run/puppet
-    ssldir = $vardir/ssl
-    environmentpath = $confdir/environments
+    ssldir = \\\$vardir/ssl
+    environmentpath = \\\$confdir/environments
 [agent]
-    classfile = $vardir/classes.txt
-    localconfig = $vardir/localconfig
+    classfile = \\\$vardir/classes.txt
+    localconfig = \\\$vardir/localconfig
 EOF
 service puppetmaster restart
 puppet cert list --all
@@ -56,7 +56,7 @@ EOF
 ln -s /etc/puppet/environments/${environment}/hiera.yaml /etc/puppet/hiera.yaml
 
 # Deploy
-r10k deploy environment -p
+r10k deploy environment -p -v
 puppet agent -t --environment ${environment}
 "
 
