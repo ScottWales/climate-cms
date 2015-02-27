@@ -1,1 +1,3 @@
 ---
+classes:
+  - roles::puppetmaster

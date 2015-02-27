@@ -40,7 +40,7 @@ cat > /etc/puppet/puppet.conf << EOF
     classfile = \\\$vardir/classes.txt
     localconfig = \\\$vardir/localconfig
 EOF
-service puppetmaster restart
+service puppetserver restart
 puppet cert list --all
 
 # Install r10k
