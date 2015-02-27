@@ -1,7 +1,6 @@
 ---
 # Classes is an array of Puppet modules to run
 classes:
-    - roles::svnmirror
     - site
 
 site::domain: 'climate-cms.nci.org.au'
