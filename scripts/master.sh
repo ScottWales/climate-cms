@@ -60,7 +60,7 @@ r10k deploy environment -p
 puppet agent -t --environment ${environment}
 "
 
-nova boot "master" \
+nova boot "test" \
     --image $image \
     --flavor $flavor \
     --user-data <(echo "$userdata") \
