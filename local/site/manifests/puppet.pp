@@ -1,4 +1,4 @@
-## \file    puppetmaster.pp
+## \file    local/site/manifests/puppet.pp
 #  \author  Scott Wales <scott.wales@unimelb.edu.au>
 #
 #  Copyright 2015 ARC Centre of Excellence for Climate Systems Science
@@ -15,30 +15,20 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-# Server for Puppet orchestration
-class roles::puppetmaster (
-) {
+class site::puppet {
 
-  package { 'puppetserver':
+  package { 'puppet':
     ensure => present,
   }
-  service { 'puppetserver':
-    ensure    => running,
-    enable    => true,
-    require   => Package['puppetserver'],
+
+  file { '/etc/puppet/puppet.conf':
+    require => Package['puppet'],
   }
 
-  package { 'r10k':
-    ensure   => present,
-    provider => gem,
-  }
-
-  augeas { 'r10k':
-    lens    => 'Puppet.lns',
-    incl    => '/etc/puppet/puppet.conf',
-    changes => 'set agent/postrun_command "/usr/bin/r10k deploy enviornment --puppetfile"',
-    require => File['/etc/puppet/puppet.conf'],
-    notify  => Service['puppet'],
+  service { 'puppet':
+    ensure  => running,
+    enable  => true,
+    require => Package['puppet'],
   }
 
 }
