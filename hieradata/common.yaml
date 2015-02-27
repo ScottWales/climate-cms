@@ -4,6 +4,8 @@ classes:
     - roles::svnmirror
     - site
 
+site::domain: 'climate-cms.nci.org.au'
+
 # Default class arguments
 apache::default_vhost: false
 apache::default_mods:  false
