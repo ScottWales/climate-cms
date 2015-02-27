@@ -22,30 +22,7 @@ flavor='m1.small'
 environment='puppetmaster'
 hostname='test'
 
-userdata="#!/bin/bash
-echo
-set -xeu
-
-# Install Puppet Master
-echo '${master_ip} puppet' >> /etc/hosts
-rpm -i http://yum.puppetlabs.com/puppetlabs-release-el-6.noarch.rpm
-yum clean all
-yum makecache -q
-
-# Setup Puppet
-yum install -y -q puppet
-cat > /etc/puppet/puppet.conf << EOF
-[main]
-    certname = ${hostname}
-    logdir = /var/log/puppet
-    rundir = /var/run/puppet
-    ssldir = \\\$vardir/ssl
-    environmentpath = \\\$confdir/environments
-[agent]
-    classfile = \\\$vardir/classes.txt
-    localconfig = \\\$vardir/localconfig
-EOF
-
+setup_master="
 # Install server
 yum install -y -q puppetserver
 sed -e '/JAVA_ARGS/s/2g/512m/g' -i /etc/sysconfig/puppetserver
@@ -66,7 +43,38 @@ ln -s /etc/puppet/environments/${environment}/hiera.yaml /etc/puppet/hiera.yaml
 
 # Deploy
 r10k deploy environment -p -v
-puppet agent --color=false --test --environment ${environment} || true
+"
+
+userdata="#!/bin/bash
+echo
+set -xeu
+
+# Puppet master IP
+echo '${master_ip} puppet' >> /etc/hosts
+
+# Puppet packages
+rpm -i http://yum.puppetlabs.com/puppetlabs-release-el-6.noarch.rpm
+yum clean all
+yum makecache -q
+
+# Setup Puppet
+yum install -y -q puppet
+cat > /etc/puppet/puppet.conf << EOF
+[main]
+    certname = ${hostname}
+    logdir = /var/log/puppet
+    rundir = /var/run/puppet
+    ssldir = \\\$vardir/ssl
+    environment = ${environment}
+    environmentpath = \\\$confdir/environments
+[agent]
+    classfile = \\\$vardir/classes.txt
+    localconfig = \\\$vardir/localconfig
+EOF
+
+${setup_master}
+
+service puppet restart
 "
 
 nova boot "$hostname" \
