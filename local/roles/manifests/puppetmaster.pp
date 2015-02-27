@@ -25,7 +25,7 @@ class roles::puppetmaster (
   service { 'puppetserver':
     ensure  => running,
     enable  => true,
-    require => Package['puppet-server'],
+    require => Package['puppetserver'],
   }
 
 }
