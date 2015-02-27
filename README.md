@@ -1,16 +1,17 @@
-climate-cms services
-====================
+ARCCSS CMS Services
+===================
 
 Booting Nodes
 -------------
 
-Boot the master server 'puppet'
+Boot the master server (required before any others)
 
-    ./scripts/master.sh
+    ./boot puppet
 
 Boot an agent server
 
-    ./scripts/agent.sh HOSTNAME
+    ./boot HOSTNAME
+    ssh puppet.fqdn puppet cert sign HOSTNAME
 
 Servers will be configured with the puppet classes listed in
 `hieradata/server/HOSTNAME.yaml`. Generally this will be a list of role
