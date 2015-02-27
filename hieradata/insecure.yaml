@@ -1,9 +1,4 @@
 ---
-# If true will print a warning in the Puppet logs
-site::insecure: true
-
-# Secrets for accessing remote mirrors
-# roles::svnmirror::mirrors:
-#   um_ext:
-#       origin_user:   user
-#       origin_secret: not-a-secret
+# If true will print a warning in the Puppet logs, override in
+# hieradata/private.yaml
+site::secure: false
