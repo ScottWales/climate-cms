@@ -1,0 +1,10 @@
+Data services
+---
+classes:
+  - roles::thredds
+  - roles::ramadda
+  - roles::las
+
+nci::mounts:
+  - ua8
+  - v45

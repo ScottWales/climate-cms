@@ -1,7 +1,5 @@
+Code development services
 ---
-site::hostname: svn
-site::domain:   accessdev.nci.org.au
-
 classes:
   - roles::svnmirror
 
