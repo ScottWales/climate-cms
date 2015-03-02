@@ -29,7 +29,7 @@ class roles::proxy (
     docroot         => '/var/www/null',
     redirect_source => '/',
     redirect_dest   => "https://${vhost}/",
-    redirect_status => 'temporary',
+    redirect_status => 'temp',
   }
 
   apache::vhost { $vhost:
