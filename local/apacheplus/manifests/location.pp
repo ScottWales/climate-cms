@@ -26,7 +26,7 @@ define apacheplus::location (
   $template        = 'apacheplus/location.erb',
 ) {
 
-  concat { $name:
+  concat::fragment { $name:
     target  => "${priority}-${vhost}.conf",
     order   => 25,
     content => template($template),
