@@ -6,6 +6,8 @@ mod 'puppetlabs/firewall'
 mod 'puppetlabs/ntp'
 mod 'puppetlabs/concat'
 mod 'puppetlabs/puppetdb'
+mod 'puppetlabs/inifile'
+mod 'puppetlabs/postgresql'
 
 mod 'saz/sudo'
 mod 'treydock/yum_cron'
