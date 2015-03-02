@@ -49,7 +49,9 @@ class roles::puppetmaster (
   }
 
   class {'puppetdb::master::config':
-    notify => Service['puppetserver'],
+    puppetdb_server     => $::hostname,
+    puppet_service_name => 'puppetserver',
+    require             => Class['puppetdb'],
   }
 
 }
