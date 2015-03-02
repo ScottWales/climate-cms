@@ -18,5 +18,5 @@ mod 'elasticsearch/elasticsearch'
 
 # Temporary fix for puppet server
 mod 'file_concat',
-    :git => 'https://github.com:cprice404/puppet-lib-file_concat.git',
+    :git => 'https://github.com/cprice404/puppet-lib-file_concat.git',
     :branch => 'maint/master/remove-unnnecessary-require'
