@@ -18,6 +18,7 @@
 class roles::puppetdb {
 
   class {'::puppetdb':
+    listen_address => $::hostname,
   }
 
 }
