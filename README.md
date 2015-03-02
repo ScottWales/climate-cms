@@ -20,10 +20,27 @@ classes, which can be found in the repository under `local/roles/manifests`.
 Servers
 -------
 
+### proxy
+
+Web proxy server used to control external access
+
+Requres external access on ports 80 and 443 to serve webpages
+
 ### puppet
 
-Puppetmaster server
+Puppetmaster server used to configure other servers
 
-### svn
+Requires internal access on port 8140 so agents can receive their
+configurations
 
-Subversion mirror
+### code
+
+Code development tools such as Jenkins and Subversion
+
+Requires access from proxy to port 8080 to provide web services
+
+### data
+
+Data management tools such as Thredds and Ramadda
+
+Requires access from to port 8080 to provide web services
