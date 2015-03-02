@@ -92,16 +92,4 @@ define roles::svnmirror::mirror (
     "
   }
 
-# # The origin site can push updates to here
-# apacheplus::location {"${url}-sync":
-#   vhost           => $vhost,
-#   order           => 'Deny,Allow',
-#   allow           => "from ${origin_ip} ${::ipaddress_eth0} localhost",
-#   deny            => 'from all',
-#   custom_fragment => "
-#     DAV          svn
-#     SVNPath      ${path}
-#   "
-# }
-
 }

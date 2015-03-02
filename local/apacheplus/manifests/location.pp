@@ -17,33 +17,20 @@
 
 define apacheplus::location (
   $vhost,
-  $path            = $name,
-  $priority        = '20',
-  $provider        = 'location',
-  $order           = 'Allow,Deny',
-  $allow           = 'from all',
-  $deny            = 'from none',
+  $priority        = '25',
+  $location        = $name,
+  $order           = 'Deny,Allow',
+  $allow           = 'from none',
+  $deny            = 'from all',
   $custom_fragment = '',
+  $template        = 'apacheplus/location.erb',
 ) {
-  if ! defined(Class['apache']) {
-    fail('You must include the apache class first')
-  }
-  $filename = regsubst($vhost, ' ', '_', 'G')
-  $config = "${::apache::vhost_dir}/${filename}.locations"
 
-  $_directories = {
-    path            => $path,
-    provider        => $provider,
-    order           => $order,
-    allow           => $allow,
-    deny            => $deny,
-    custom_fragment => $custom_fragment,
+  concat { $name:
+    target  => "${priority}-${vhost}.conf",
+    order   => 25,
+    content => template($template),
   }
 
-  concat::fragment {"Location ${name}":
-    target  => $config,
-    content => template('apache/vhost/_directories.erb'),
-    order   => $priority,
-  }
 }
 

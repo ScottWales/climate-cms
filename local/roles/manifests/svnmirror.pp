@@ -63,7 +63,7 @@ class roles::svnmirror (
   ensure_packages('mod_dav_svn')
 
   # Redirect non-SSL connections to https
-  apacheplus::vhost {"${vhost}-redirect":
+  apache::vhost {"${vhost}-redirect":
     port     => 80,
     docroot  => '/var/www/null',
     rewrites =>[
@@ -75,7 +75,7 @@ class roles::svnmirror (
   }
 
   # Main vhost
-  apacheplus::vhost {$vhost:
+  apache::vhost {$vhost:
     ssl             => true,
     ssl_proxyengine => true,
     port            => 443,
