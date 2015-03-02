@@ -119,8 +119,6 @@ class roles::svnmirror (
     mode   => '0700',
   }
 
-  file { "${home}/.subversion/auth": }
-
   # Create mirrors listed in hiera
   create_resources('::roles::svnmirror::mirror', $mirrors)
 }

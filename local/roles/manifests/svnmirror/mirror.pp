@@ -67,7 +67,6 @@ define roles::svnmirror::mirror (
     require   => [
       Exec["svnadmin create ${path}"],
       File["${path}/hooks/pre-revprop-change"],
-      File["${home}/.subversion/auth"],
     ],
   }
 
