@@ -36,7 +36,7 @@ define site::admin (
 
   include sudo
   sudo::conf {$name:
-    content => "${name} ALL=NOPASSWD:ALL",
+    content => "${name} ALL=(ALL) NOPASSWD:ALL",
   }
 
   if $mail {

@@ -45,7 +45,7 @@ define roles::svnmirror::mirror (
     user    => $user,
     group   => $group,
     creates => "${path}/format",
-    require => File[$path],
+    require => [File[$path],Package['subversion']],
   }
 
   # Create a hook
