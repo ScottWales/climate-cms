@@ -80,10 +80,6 @@ class roles::svnmirror (
     ssl_proxyengine => true,
     port            => 443,
     docroot         => '/var/www/null',
-    proxy_pass      => [{
-      'path'        => '/sync',
-      'url'         => 'http://localhost:8080/',
-    }],
     custom_fragment => '
       KeepAlive            On
       MaxKeepAliveRequests 1000
