@@ -25,20 +25,10 @@ class site (
   if ! $secure {
     warning('Not using secure passwords or certificates')
   }
+
   include ::ntp
-
-  service { 'network': }
-
-  host { "${hostname}.${domain}":
-    host_aliases => $hostname,
-    ip           => $::ipaddress_eth0,
-    notify       => Service['network'],
-  }
-  file { '/etc/hostname':
-    ensure  => file,
-    content => "${hostname}\n",
-    notify  => Service['network'],
-  }
+  include site::network
+  include site::puppet
 
   # Don't require a tty for sudoers
   sudo::conf {'requiretty':
@@ -66,5 +56,4 @@ class site (
     check_only => 'no',
   }
 
-  include site::puppet
 }
