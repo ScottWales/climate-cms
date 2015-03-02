@@ -15,4 +15,8 @@ mod 'treydock/yum_cron'
 
 mod 'elasticsearch/logstash'
 mod 'elasticsearch/elasticsearch'
-mod 'ispavailability/file_concat'
+
+# Temporary fix for puppet server
+mod 'file_concat',
+    :git => 'git@github.com:cprice404/puppet-lib-file_concat.git',
+    :branch => 'maint/master/remove-unnnecessary-require'
