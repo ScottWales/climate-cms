@@ -48,4 +48,8 @@ class roles::puppetmaster (
     action => 'accept',
   }
 
+  class {'puppetdb::master::config':
+    notify => Service['puppetserver'],
+  }
+
 }
