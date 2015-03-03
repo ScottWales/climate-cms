@@ -37,4 +37,21 @@ class site::firewall::pre {
     action => 'accept',
   }
 
+  firewall { '000 ip6 accept all icmp':
+    proto    => 'icmp',
+    action   => 'accept',
+    provider => 'ip6tables',
+  }->
+  firewall { '001 ip6 accept all to lo interface':
+    proto    => 'all',
+    iniface  => 'lo',
+    action   => 'accept',
+    provider => 'ip6tables',
+  }->
+  firewall { '002 ip6 accept related established rules':
+    proto    => 'all',
+    state    => ['RELATED', 'ESTABLISHED'],
+    action   => 'accept',
+    provider => 'ip6tables',
+  }
 }
