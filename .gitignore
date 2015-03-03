@@ -1,1 +1,4 @@
-.vagrant
+.*
+*.swp
+/Gemfile.lock
+/hieradata/*private*

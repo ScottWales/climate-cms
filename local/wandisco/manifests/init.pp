@@ -1,4 +1,4 @@
-## \file    manifests/site.pp
+## \file    modules/wandisco/manifests/init.pp
 #  \author  Scott Wales <scott.wales@unimelb.edu.au>
 #
 #  Copyright 2014 ARC Centre of Excellence for Climate Systems Science
@@ -15,26 +15,26 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-node default {
+# Sets up Wandisco Yum repository
+class wandisco {
+  $gpgkey = '/etc/pki/rpm-gpg/RPM-GPG-KEY-WANdisco'
 
-  # Always include ::site
-  include ::site
-
-  # Include classes listed in Hiera
-  hiera_include('classes',[])
-
-  # Silence deprecation warning
-  Package {allow_virtual => false}
-
-  # Firewall defaults
-  Firewall {
-    require => Class['::site::firewall::pre'],
-    before  => Class['::site::firewall::post'],
+  file {$gpgkey:
+    ensure => present,
+    source => 'puppet:///modules/wandisco/RPM-GPG-KEY-WANdisco',
   }
-  include ::site::firewall::pre
-  include ::site::firewall::post
 
-  # Ensure Pip is available before we install packages with it
-  ensure_packages('python-pip')
-  Package['python-pip'] -> Package<| provider == pip |>
+  if $::osfamily == 'redhat' {
+    yumrepo {'wandisco':
+      ensure   => present,
+      baseurl  => 'http://opensource.wandisco.com/rhel/6/svn-1.8/RPMS/',
+      enabled  => true,
+      gpgcheck => true,
+      gpgkey   => "file://${gpgkey}",
+      require  => File[$gpgkey],
+      before   => Package['subversion','mod_dav_svn'],
+    }
+  } else {
+    fail("${::osfamily} is unsupported")
+  }
 }

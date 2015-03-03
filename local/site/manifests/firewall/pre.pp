@@ -1,4 +1,4 @@
-## \file    manifests/site.pp
+## \file    modules/site/manifests/firewall/pre.pp
 #  \author  Scott Wales <scott.wales@unimelb.edu.au>
 #
 #  Copyright 2014 ARC Centre of Excellence for Climate Systems Science
@@ -15,26 +15,26 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-node default {
+class site::firewall::pre {
 
-  # Always include ::site
-  include ::site
-
-  # Include classes listed in Hiera
-  hiera_include('classes',[])
-
-  # Silence deprecation warning
-  Package {allow_virtual => false}
-
-  # Firewall defaults
   Firewall {
-    require => Class['::site::firewall::pre'],
-    before  => Class['::site::firewall::post'],
+    require => undef,
   }
-  include ::site::firewall::pre
-  include ::site::firewall::post
 
-  # Ensure Pip is available before we install packages with it
-  ensure_packages('python-pip')
-  Package['python-pip'] -> Package<| provider == pip |>
+  # Default firewall rules
+  firewall { '000 accept all icmp':
+    proto   => 'icmp',
+    action  => 'accept',
+  }->
+  firewall { '001 accept all to lo interface':
+    proto   => 'all',
+    iniface => 'lo',
+    action  => 'accept',
+  }->
+  firewall { '002 accept related established rules':
+    proto  => 'all',
+    state  => ['RELATED', 'ESTABLISHED'],
+    action => 'accept',
+  }
+
 }

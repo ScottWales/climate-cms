@@ -1,4 +1,4 @@
-## \file    local/site/manifests/puppet.pp
+## \file    local/roles/manifests/elasticsearch.pp
 #  \author  Scott Wales <scott.wales@unimelb.edu.au>
 #
 #  Copyright 2015 ARC Centre of Excellence for Climate Systems Science
@@ -15,20 +15,16 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-class site::puppet {
+class roles::elasticsearch (
+) {
+  include site::java
 
-  package { 'puppet':
-    ensure => present,
+  class {'::elasticsearch':
+    manage_repo  => true,
+    repo_version => '1.4',
   }
 
-  file { '/etc/puppet/puppet.conf':
-    require => Package['puppet'],
-  }
-
-  service { 'puppet':
-    ensure  => running,
-    enable  => true,
-    require => Package['puppet'],
+  ::elasticsearch::instance { 'logstash':
   }
 
 }

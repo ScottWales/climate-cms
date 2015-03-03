@@ -1,4 +1,4 @@
-## \file    manifests/site.pp
+## \file    modules/site/manifests/admin/pubkey.pp
 #  \author  Scott Wales <scott.wales@unimelb.edu.au>
 #
 #  Copyright 2014 ARC Centre of Excellence for Climate Systems Science
@@ -15,26 +15,21 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-node default {
+define site::admin::pubkey (
+  $user
+) {
+  $keystring = $name
 
-  # Always include ::site
-  include ::site
+  $elements = split($keystring,' ')
 
-  # Include classes listed in Hiera
-  hiera_include('classes',[])
+  $type    = $elements[0]
+  $key     = $elements[1]
+  $comment = regsubst($keystring,'^\S+\s+\S+\s+(.*)$','\1')
 
-  # Silence deprecation warning
-  Package {allow_virtual => false}
-
-  # Firewall defaults
-  Firewall {
-    require => Class['::site::firewall::pre'],
-    before  => Class['::site::firewall::post'],
+  ssh_authorized_key{"${user} ${comment}":
+    ensure => present,
+    key    => $key,
+    type   => $type,
+    user   => $user,
   }
-  include ::site::firewall::pre
-  include ::site::firewall::post
-
-  # Ensure Pip is available before we install packages with it
-  ensure_packages('python-pip')
-  Package['python-pip'] -> Package<| provider == pip |>
 }

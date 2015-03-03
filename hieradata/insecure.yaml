@@ -1,0 +1,4 @@
+---
+# If true will print a warning in the Puppet logs, override in
+# hieradata/private.yaml
+site::secure: false

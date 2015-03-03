@@ -1,4 +1,4 @@
-## \file    local/site/manifests/puppet.pp
+## \file    local/site/manifests/logstash.pp
 #  \author  Scott Wales <scott.wales@unimelb.edu.au>
 #
 #  Copyright 2015 ARC Centre of Excellence for Climate Systems Science
@@ -15,20 +15,15 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-class site::puppet {
+# Install logstash for monitoring
+class site::logstash (
+) {
+  include site::java
 
-  package { 'puppet':
-    ensure => present,
-  }
-
-  file { '/etc/puppet/puppet.conf':
-    require => Package['puppet'],
-  }
-
-  service { 'puppet':
-    ensure  => running,
-    enable  => true,
-    require => Package['puppet'],
+  class {'::logstash':
+    install_contrib => true,
+    manage_repo     => true,
+    repo_version    => '1.4',
   }
 
 }

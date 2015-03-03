@@ -1,0 +1,15 @@
+---
+classes:
+  - roles::proxy
+
+roles::proxy::vhost:   'climate-cms.nci.org.au'
+roles::proxy::default: '/repository'
+
+# Connections not managed within Puppet
+roles::proxy::connections:
+    '/jenkins':
+        url: 'http://10.0.0.62/jenkins'
+    '/repository':
+        url: 'http://10.0.0.68/ramadda'
+    '/thredds':
+        url: 'http://10.0.0.68/thredds'

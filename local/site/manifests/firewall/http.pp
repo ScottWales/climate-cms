@@ -1,4 +1,4 @@
-## \file    manifests/site.pp
+## \file    modules/site/manifests/firewall/http.pp
 #  \author  Scott Wales <scott.wales@unimelb.edu.au>
 #
 #  Copyright 2014 ARC Centre of Excellence for Climate Systems Science
@@ -15,26 +15,17 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-node default {
+class site::firewall::http {
 
-  # Always include ::site
-  include ::site
-
-  # Include classes listed in Hiera
-  hiera_include('classes',[])
-
-  # Silence deprecation warning
-  Package {allow_virtual => false}
-
-  # Firewall defaults
-  Firewall {
-    require => Class['::site::firewall::pre'],
-    before  => Class['::site::firewall::post'],
+  # Allow http
+  firewall { '080 accept http':
+    proto  => 'tcp',
+    port   => '80',
+    action => 'accept',
   }
-  include ::site::firewall::pre
-  include ::site::firewall::post
-
-  # Ensure Pip is available before we install packages with it
-  ensure_packages('python-pip')
-  Package['python-pip'] -> Package<| provider == pip |>
+  firewall { '081 accept https':
+    proto  => 'tcp',
+    port   => '443',
+    action => 'accept',
+  }
 }

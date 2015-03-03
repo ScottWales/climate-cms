@@ -1,4 +1,4 @@
-## \file    manifests/site.pp
+## \file    modules/site/manifests/admin.pp
 #  \author  Scott Wales <scott.wales@unimelb.edu.au>
 #
 #  Copyright 2014 ARC Centre of Excellence for Climate Systems Science
@@ -15,26 +15,34 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-node default {
+# Create an admin user
 
-  # Always include ::site
-  include ::site
+define site::admin (
+  $home    = "/home/${name}",
+  $mail    = undef,
+  $pubkeys = [],
+) {
 
-  # Include classes listed in Hiera
-  hiera_include('classes',[])
-
-  # Silence deprecation warning
-  Package {allow_virtual => false}
-
-  # Firewall defaults
-  Firewall {
-    require => Class['::site::firewall::pre'],
-    before  => Class['::site::firewall::post'],
+  user {$name:
+    ensure         => present,
+    home           => $home,
+    managehome     => true,
+    purge_ssh_keys => true,
   }
-  include ::site::firewall::pre
-  include ::site::firewall::post
 
-  # Ensure Pip is available before we install packages with it
-  ensure_packages('python-pip')
-  Package['python-pip'] -> Package<| provider == pip |>
+  site::admin::pubkey {$pubkeys:
+    user => $name,
+  }
+
+  include sudo
+  sudo::conf {$name:
+    content => "${name} ALL=(ALL) NOPASSWD:ALL",
+  }
+
+  if $mail {
+    mailalias {$name:
+      recipient => $mail,
+    }
+  }
+
 }

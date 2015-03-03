@@ -1,4 +1,4 @@
-## \file    local/site/manifests/puppet.pp
+## \file    manifests/install.pp
 #  \author  Scott Wales <scott.wales@unimelb.edu.au>
 #
 #  Copyright 2015 ARC Centre of Excellence for Climate Systems Science
@@ -15,20 +15,14 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-class site::puppet {
+class cronic::install {
 
-  package { 'puppet':
-    ensure => present,
-  }
-
-  file { '/etc/puppet/puppet.conf':
-    require => Package['puppet'],
-  }
-
-  service { 'puppet':
-    ensure  => running,
-    enable  => true,
-    require => Package['puppet'],
+  file {'/usr/bin/cronic':
+    ensure => file,
+    source => 'puppet:///modules/cronic/cronic',
+    mode   => '0755',
+    owner  => 'root',
+    group  => 'root',
   }
 
 }

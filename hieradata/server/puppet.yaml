@@ -1,0 +1,4 @@
+---
+classes:
+  - roles::puppetmaster
+  - roles::puppetdb

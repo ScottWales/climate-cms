@@ -1,4 +1,4 @@
-## \file    manifests/site.pp
+## \file    modules/apacheplus/manifests/location.pp
 #  \author  Scott Wales <scott.wales@unimelb.edu.au>
 #
 #  Copyright 2014 ARC Centre of Excellence for Climate Systems Science
@@ -15,26 +15,22 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-node default {
+define apacheplus::location (
+  $vhost,
+  $priority        = '25',
+  $location        = $name,
+  $order           = 'Deny,Allow',
+  $allow           = 'from none',
+  $deny            = 'from all',
+  $custom_fragment = '',
+  $template        = 'apacheplus/location.erb',
+) {
 
-  # Always include ::site
-  include ::site
-
-  # Include classes listed in Hiera
-  hiera_include('classes',[])
-
-  # Silence deprecation warning
-  Package {allow_virtual => false}
-
-  # Firewall defaults
-  Firewall {
-    require => Class['::site::firewall::pre'],
-    before  => Class['::site::firewall::post'],
+  concat::fragment { $name:
+    target  => "${priority}-${vhost}.conf",
+    order   => 25,
+    content => template($template),
   }
-  include ::site::firewall::pre
-  include ::site::firewall::post
 
-  # Ensure Pip is available before we install packages with it
-  ensure_packages('python-pip')
-  Package['python-pip'] -> Package<| provider == pip |>
 }
+

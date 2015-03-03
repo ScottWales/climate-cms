@@ -1,4 +1,4 @@
-## \file    local/site/manifests/puppet.pp
+## \file    local/site/manifests/java.pp
 #  \author  Scott Wales <scott.wales@unimelb.edu.au>
 #
 #  Copyright 2015 ARC Centre of Excellence for Climate Systems Science
@@ -15,20 +15,9 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-class site::puppet {
-
-  package { 'puppet':
-    ensure => present,
+# Wrapper to provide java defaults, can be included by roles
+class site::java (
+) {
+  class {'::java':
   }
-
-  file { '/etc/puppet/puppet.conf':
-    require => Package['puppet'],
-  }
-
-  service { 'puppet':
-    ensure  => running,
-    enable  => true,
-    require => Package['puppet'],
-  }
-
 }

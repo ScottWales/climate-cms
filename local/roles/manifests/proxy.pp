@@ -1,4 +1,4 @@
-## \file    local/site/manifests/puppet.pp
+## \file    local/roles/manifests/proxy.pp
 #  \author  Scott Wales <scott.wales@unimelb.edu.au>
 #
 #  Copyright 2015 ARC Centre of Excellence for Climate Systems Science
@@ -15,20 +15,26 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-class site::puppet {
+class roles::proxy (
+  $vhost = $::fqdn,
+) {
+  include site::firewall::http
 
-  package { 'puppet':
-    ensure => present,
+  class { 'apache':
   }
 
-  file { '/etc/puppet/puppet.conf':
-    require => Package['puppet'],
+  # Ensure HTTPS is used
+  apache::vhost { "${vhost}_redirect":
+    port            => '80',
+    docroot         => '/var/www/null',
+    redirect_source => '/',
+    redirect_dest   => "https://${vhost}/",
+    redirect_status => 'temp',
   }
 
-  service { 'puppet':
-    ensure  => running,
-    enable  => true,
-    require => Package['puppet'],
+  apache::vhost { $vhost:
+    port    => '443',
+    docroot => '/var/www/html',
+    ssl     => true,
   }
-
 }
