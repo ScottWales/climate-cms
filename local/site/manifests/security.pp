@@ -16,8 +16,8 @@
 #  limitations under the License.
 
 class site::security {
-  include site::firewall::defaults
-  include site::firewall::dropall
+  include site::firewall::pre
+  include site::firewall::post
 
   firewallchain {'INPUT:filter:IPv4':
     purge  => true,

@@ -29,6 +29,7 @@ class site (
   include ::ntp
   include site::network
   include site::puppet
+  include site::security
 
   # Don't require a tty for sudoers
   sudo::conf {'requiretty':

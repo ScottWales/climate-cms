@@ -11,6 +11,7 @@ mod 'puppetlabs/postgresql'
 mod 'puppetlabs/java'
 
 mod 'saz/sudo'
+mod 'saz/ssh'
 mod 'treydock/yum_cron'
 
 mod 'elasticsearch/logstash'
