@@ -1,0 +1,222 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Puppet Classes &mdash; climate-cms cloud 0.1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="climate-cms cloud 0.1.0 documentation" href="index.html" />
+    <link rel="prev" title="Getting Started" href="gettingstarted.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="gettingstarted.html" title="Getting Started"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">climate-cms cloud 0.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="puppet-classes">
+<h1>Puppet Classes<a class="headerlink" href="#puppet-classes" title="Permalink to this headline">¶</a></h1>
+<p>The local Puppet classes mainly act as glue to bring together external modules
+from the Puppet Forge. They set up default arguments, open firewall ports and
+configure service monitoring and backups</p>
+<div class="section" id="servers">
+<h2>Servers<a class="headerlink" href="#servers" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="server-apache">
+<h3>server::apache<a class="headerlink" href="#server-apache" title="Permalink to this headline">¶</a></h3>
+<p>Apache is a web server. All incoming web connections go through an Apache
+server for encryption, logging and access control</p>
+</div>
+<div class="section" id="server-elasticsearch">
+<h3>server::elasticsearch<a class="headerlink" href="#server-elasticsearch" title="Permalink to this headline">¶</a></h3>
+<p>Elasticsearch is a flexible data storage and search tool. It is used for
+accessing system logs alongside Logstash and Kibana.</p>
+</div>
+<div class="section" id="server-icinga">
+<h3>server::icinga<a class="headerlink" href="#server-icinga" title="Permalink to this headline">¶</a></h3>
+<p>Icinga is a service that checks the condition of servers. It can check if the
+disk is full, or make sure other services are running.</p>
+<p>The web interface for icinga is available at <tt class="docutils literal"><span class="pre">/admin/icinga</span></tt></p>
+</div>
+<div class="section" id="server-jenkins">
+<h3>server::jenkins<a class="headerlink" href="#server-jenkins" title="Permalink to this headline">¶</a></h3>
+<p>Jenkins is a server for automatically building software and running tests.</p>
+<p>The web interface for Jenkins is available at <tt class="docutils literal"><span class="pre">/jenkins</span></tt></p>
+</div>
+<div class="section" id="server-proxy">
+<h3>server::proxy<a class="headerlink" href="#server-proxy" title="Permalink to this headline">¶</a></h3>
+<p>The Proxy class sets up an Apache host and is responsible for wiring together
+web services. Web services requesting a connection using
+<tt class="docutils literal"><span class="pre">client::proxy::connection</span></tt> are gathered together here.</p>
+</div>
+<div class="section" id="server-puppet">
+<h3>server::puppet<a class="headerlink" href="#server-puppet" title="Permalink to this headline">¶</a></h3>
+<p>The Puppet server hosts the central configuration for all servers. Puppet
+clients connect to it to work ou what changes need to be made to their servers.</p>
+<p>The Puppet server class also installs PuppetDB, which Puppet uses to check what
+state the clients are in, and R10K, which is used to update the Puppet
+configuration.</p>
+</div>
+<div class="section" id="server-ramadda">
+<h3>server::ramadda<a class="headerlink" href="#server-ramadda" title="Permalink to this headline">¶</a></h3>
+<p>Ramadda is a web service for managing and sharing data. Ramadda is set up so
+that it can serve data in NCI&#8217;s <tt class="docutils literal"><span class="pre">/g/data</span></tt> storage</p>
+<p>The web interface for Ramadda is available at <tt class="docutils literal"><span class="pre">/repository</span></tt></p>
+</div>
+<div class="section" id="server-salt">
+<h3>server::salt<a class="headerlink" href="#server-salt" title="Permalink to this headline">¶</a></h3>
+<p>Salt is a service for running commands on many servers at the same time.
+Commands given on the Salt server can be run on all or a selection of the
+servers in the climate-cms cloud. This is used primarily for configuration
+updates by performing a dry run of Puppet on all servers.</p>
+</div>
+<div class="section" id="server-tomcat">
+<h3>server::tomcat<a class="headerlink" href="#server-tomcat" title="Permalink to this headline">¶</a></h3>
+<p>Tomcat is a server for running Java web programs. It is used by many of the
+data tools, such as Thredds and Ramadda. Access to the Tomcat server is via an
+Apache proxy.</p>
+</div>
+</div>
+<div class="section" id="clients">
+<h2>Clients<a class="headerlink" href="#clients" title="Permalink to this headline">¶</a></h2>
+<p>Clients are generally installed on multiple hosts and talk to a server. These
+classes install client software and open up internal firewall ports</p>
+<p>These classes can be found in <tt class="docutils literal"><span class="pre">local/clients/</span></tt> and <tt class="docutils literal"><span class="pre">local/site/</span></tt></p>
+<div class="section" id="client-icinga">
+<h3>client::icinga<a class="headerlink" href="#client-icinga" title="Permalink to this headline">¶</a></h3>
+<p>Sets up Icinga monitors on the host and connects them to the Icinga server.
+Default monitors are ping and available disk space.</p>
+</div>
+<div class="section" id="client-jenkins">
+<h3>client::jenkins<a class="headerlink" href="#client-jenkins" title="Permalink to this headline">¶</a></h3>
+<p>Sets up a Jenkins worker node on the host so Jenkins can connect over ssh to run jobs</p>
+</div>
+<div class="section" id="client-proxy-connection">
+<h3>client::proxy::connection<a class="headerlink" href="#client-proxy-connection" title="Permalink to this headline">¶</a></h3>
+<p>Sets up a url on the proxy server to point to a port on this host. Server
+classes use this to expose their web interfaces</p>
+</div>
+<div class="section" id="client-puppet">
+<h3>client::puppet<a class="headerlink" href="#client-puppet" title="Permalink to this headline">¶</a></h3>
+<p>Sets up a Puppet agent that will automatically configure the host</p>
+</div>
+<div class="section" id="client-salt">
+<h3>client::salt<a class="headerlink" href="#client-salt" title="Permalink to this headline">¶</a></h3>
+<p>Sets up a salt minion that can run commands sent by the salt master</p>
+</div>
+<div class="section" id="client-scratchdisk">
+<h3>client::scratchdisk<a class="headerlink" href="#client-scratchdisk" title="Permalink to this headline">¶</a></h3>
+<p>Mounts the scratch SSD available on some NCI nodes to <tt class="docutils literal"><span class="pre">/scratch</span></tt></p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Puppet Classes</a><ul>
+<li><a class="reference internal" href="#servers">Servers</a><ul>
+<li><a class="reference internal" href="#server-apache">server::apache</a></li>
+<li><a class="reference internal" href="#server-elasticsearch">server::elasticsearch</a></li>
+<li><a class="reference internal" href="#server-icinga">server::icinga</a></li>
+<li><a class="reference internal" href="#server-jenkins">server::jenkins</a></li>
+<li><a class="reference internal" href="#server-proxy">server::proxy</a></li>
+<li><a class="reference internal" href="#server-puppet">server::puppet</a></li>
+<li><a class="reference internal" href="#server-ramadda">server::ramadda</a></li>
+<li><a class="reference internal" href="#server-salt">server::salt</a></li>
+<li><a class="reference internal" href="#server-tomcat">server::tomcat</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#clients">Clients</a><ul>
+<li><a class="reference internal" href="#client-icinga">client::icinga</a></li>
+<li><a class="reference internal" href="#client-jenkins">client::jenkins</a></li>
+<li><a class="reference internal" href="#client-proxy-connection">client::proxy::connection</a></li>
+<li><a class="reference internal" href="#client-puppet">client::puppet</a></li>
+<li><a class="reference internal" href="#client-salt">client::salt</a></li>
+<li><a class="reference internal" href="#client-scratchdisk">client::scratchdisk</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="gettingstarted.html"
+                        title="previous chapter">Getting Started</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/modules.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="gettingstarted.html" title="Getting Started"
+             >previous</a> |</li>
+        <li><a href="index.html">climate-cms cloud 0.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Scott Wales.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
